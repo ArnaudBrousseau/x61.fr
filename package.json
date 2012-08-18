@@ -1,14 +1,15 @@
 {
-  "name" : "ar.no.de",
-  "homepage" : "http://ar.no.de",
+  "name" : "0x61.fr",
+  "homepage" : "http://0x61.fr",
   "author" : "Arnaud Brousseau",
   "dependencies": {
       "marked": "0.2.x"
+      "mustache": "0.5.x"
       "mime": "1.2.x",
       "express": "2.5.x",
       "connect": "1.8.x"
     },
-  "repository" : {"type": "git", "url": "node@ar.no.de:repo"},
+  "repository" : {"type": "git", "url": "git@github.com:ArnaudBrousseau/0x61.fr.git"},
   "main" : "server.js",
-  "version" : "0.7.0"
+  "version" : "0.7.2"
 }

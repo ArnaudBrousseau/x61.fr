@@ -327,15 +327,16 @@ footer .smiley {
    Soooo hipster.
    ========================================================================== */
 @media only screen and (max-width: 710px) {
-  /* Style adjustments for viewports that meet the condition */
   .main .logo {
     visibility: hidden;
   }
+  .main nav {
+    font-size: 20px;
+  }
+  .main ul {
+    top: -34px;
+  }
 }
-@media only screen and (min-width: 35em) {
-  /* Style adjustments for viewports that meet the condition */
-}
-
 
 
 /* ==|== non-semantic helper classes ========================================
