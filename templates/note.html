@@ -1,0 +1,69 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>{{page-title}} | ar.no.de</title>
+
+  <meta name="description" content="{{page-description}}">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="/css/arnode.css">
+  <script src="js/vendor/modernizr-2.5.3.min.js"></script>
+</head>
+<body>
+  <!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
+  <header class="main">
+    <h1 class="logo">
+      ar
+      no
+      de
+    </h1>
+    <nav>
+      <ul>
+        <li><a href="/notes" title="Notes Index">Index</a></li>
+        <li><a href="/labs" title="Science? Boom!">Labs</a></li>
+        <li><a href="https://twitter.com/arnaudbrousseau" title="Follow me if you can">Tweets</a></li>
+      </ul>
+    </nav>
+  </header>
+  
+  <div class="content wrapper">
+    <header>
+      <h1>{{note-title}}</h1>
+      <em>Posted on <time datetime="{{date-microdata}}">{{date-human}}</time></em>
+    </header>
+    {{note}}
+  </div>
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname = 'arnode'; 
+    var disqus_developer = 1;
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view comments</noscript>
+  
+  <footer class="main">
+    Copyright &copy; Arnaud Brousseau &mdash; Powered by <a href="http://nodejs.org/">Node.js</a>, hosted on a <a href="http://joyent.com">Joyent</a> <a href="https://no.de/">SmartMachine</a> &mdash; Have a nice day! <span class="smiley">&#9786;</span>
+  </footer>
+  
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/js/jquery-1.7.2.min.js"><\/script>')</script>
+
+  <script src="js/main.js"></script>
+
+  <script>
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
+</body>
+</html>

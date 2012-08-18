@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Onerror and iframes</title>
+  </head>
+  <body>
+    <script>
+      window.onerror = function(m, f, l) {
+        console.log(m);
+        console.log(f);
+        console.log(l);
+      }
+    </script>
+    <p>In the parent</p>
+    <iframe src="http://arnaudbrousseau.com/fiddle/iframe-error.html"></iframe>
+  </body>
+</html>

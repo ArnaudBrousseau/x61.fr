@@ -1,0 +1,75 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title>The world of schema.org</title>
+  <meta name="description" content="A visualization of http://schema.org built
+  with Protovis. Developer friendly, pretty, neat.">
+  <meta name="author" content="Arnaud Brousseau">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <link rel="stylesheet" href="css/style.css?v=2">
+
+  <script src="js/libs/modernizr-1.7.min.js"></script>
+
+</head>
+
+<body>
+
+  <div id="container">
+    <header>
+      The world of schema.org
+    </header>
+    <aside>
+      <p>// Power-user tips 
+      // 1.Hold "Alt" to expand/collapse recursively a node (try it on the root!) 
+      // 2.Click on the right column to go to the relevant schema.org
+      documentation //
+      </p>
+    </aside>
+    <div id="main" role="main">
+      <!-- Here comes the awesome visualization -->
+    </div>
+    <footer>
+      Licensed under 
+      <a href="http://sam.zoy.org/wtfpl/" title="WTFPL">the WTFPL</a> 
+      - Happy? Sad? Bug? Feature? Patch? 
+      <br/>Let us know on Twitter:
+      <a href="http://twitter.com/arnaudbrousseau">@arnaudbrousseau</a> 
+      /cc <a href="http://twitter.com/danbri">@danbri</a>
+      <a href="http://twitter.com/nevali">@nevali</a>
+      <a href="http://twitter.com/tomayac">@tomayac</a>
+    </footer>
+  </div> 
+
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+  <script>window.jQuery || document.write("<script src='js/libs/jquery-1.5.1.min.js'>\x3C/script>")</script>
+
+  <script src="js/libs/protovis-r3.2.js"></script>
+  <script src="js/data.js"></script>
+  <script type="text/javascript" src="js/script.js"></script>
+  <!-- scripts concatenated and minified via ant build script-->
+  <script src="js/plugins.js"></script>
+  <!-- end scripts-->
+
+
+  <!-- <script> -->
+  <!--   var _gaq=[["_setAccount","UA-XXXXX-X"],["_trackPageview"]]; -->
+  <!--   (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1; -->
+  <!--   g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js"; -->
+  <!--   s.parentNode.insertBefore(g,s)}(document,"script")); -->
+  <!-- </script> -->
+
+</body>
+</html>

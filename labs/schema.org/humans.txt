@@ -1,0 +1,12 @@
+/* The guy responsible for this */
+Arnaud Brousseau: @arnaudbrousseau
+
+/* Built with */
+Web Standards
+Protovis (http://vis.stanford.edu/protovis/)
+Love
+
+/* Thanks */
+Dan Brickley: @danbri
+Thomas Steiner: @tomayac
+Mo: @nevali

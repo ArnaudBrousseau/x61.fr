@@ -1,0 +1,385 @@
+/* =============================================================================
+   H5BP Normalizer
+   ========================================================================== */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, nav, section { display: block; }
+audio, canvas, video { display: inline-block; *display: inline; *zoom: 1; }
+audio:not([controls]) { display: none; }
+[hidden] { display: none; }
+
+html { font-size: 100%; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+html, button, input, select, textarea { font-family: sans-serif; color: #222; }
+body { margin: 0; font-size: 1em; line-height: 1.4; }
+
+::-moz-selection { background: #ab2012; color: #fff; text-shadow: none; }
+::selection { background: #ab2012; color: #fff; text-shadow: none; }
+
+/* Links */
+a { color: #00e; }
+a:visited { color: #551a8b; }
+a:hover { color: #06e; }
+a:focus { outline: thin dotted; }
+a:hover, a:active { outline: 0; }
+
+
+/* Typography */
+abbr[title] { border-bottom: 1px dotted; }
+b, strong { font-weight: bold; }
+blockquote { margin: 1em 40px; }
+dfn { font-style: italic; }
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+ins { background: #ff9; color: #000; text-decoration: none; }
+mark { background: #ff0; color: #000; font-style: italic; font-weight: bold; }
+pre, code, kbd, samp { font-family: monospace, serif; _font-family: 'courier new', monospace; font-size: 1em; }
+pre { white-space: pre; white-space: pre-wrap; word-wrap: break-word; }
+q { quotes: none; }
+q:before, q:after { content: ""; content: none; }
+small { font-size: 85%; }
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+
+/* Lists */
+ul, ol { margin: 1em 0; padding: 0 0 0 40px; }
+dd { margin: 0 0 0 40px; }
+nav ul, nav ol { list-style: none; list-style-image: none; margin: 0; padding: 0; }
+
+
+/* Forms */
+form { margin: 0; }
+fieldset { border: 0; margin: 0; padding: 0; }
+label { cursor: pointer; }
+legend { border: 0; *margin-left: -7px; padding: 0; white-space: normal; }
+button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
+button, input { line-height: normal; }
+button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; *overflow: visible; }
+button[disabled], input[disabled] { cursor: default; }
+input[type="checkbox"], input[type="radio"] { box-sizing: border-box; padding: 0; *width: 13px; *height: 13px; }
+input[type="search"] { -webkit-appearance: textfield; -moz-box-sizing: content-box; -webkit-box-sizing: content-box; box-sizing: content-box; }
+input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
+button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; }
+textarea { overflow: auto; vertical-align: top; resize: vertical; }
+
+/* Misc */
+img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
+svg:not(:root) { overflow: hidden; }
+figure { margin: 0; }
+table { border-collapse: collapse; border-spacing: 0; }
+td { vertical-align: top; }
+.chromeframe { margin: 0.2em 0; background: #ccc; color: black; padding: 0.2em 0; }
+
+
+/* ==|== Ar.no.de's styles ==================================================
+   Author: Arnaud Brousseau
+   ========================================================================== */
+
+/* Let's begin with the logo */
+body {
+  border-top: 30px #ab2012 solid;
+  font-family: georgia, serif;
+}
+.wrapper {
+  width: 70%;
+  max-width: 960px;
+  margin: 20px auto;
+}
+
+header.main {
+  max-width: 1180px;
+  margin: auto;
+}
+.logo {
+  position: absolute;
+  top: 0px;
+  left: 20px;
+  width: 50px;
+  height: 130px;
+  margin: 0;
+  padding: 6px 12px 6px 12px;
+  border: 2px #444 solid;
+  border-top: none;
+  font-family: monospace;
+  text-align: center;
+  line-height: 40px;
+  font-size: 40px;
+  background-color: #fff;
+  letter-spacing: 4px;
+  color: #444;
+}
+
+.logo:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: -3px;
+  top: 142px;
+  width: 0px;
+  height: 0px;
+  border-width: 26px 40px 26px 40px;
+  border-color: #444 transparent transparent transparent;
+  border-style: solid;
+}
+
+.logo:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: -3px;
+  top: 142px;
+  width: 0px;
+  height: 0px;
+  border-width: 20px 40px 20px 40px;
+  border-color: #fff transparent transparent transparent;
+  border-style: solid;
+}
+
+.main nav {
+  width: 70%;
+  margin: 0 auto;
+  position: relative;
+  font-family: monospace;
+  font-variant: small-caps;
+  font-size: 24px;
+}
+.main ul {
+  position: absolute;
+  background: white;
+  padding: 0 10px;
+  top: -35px;
+  right: 10px;
+}
+.main ul:after {
+  content: "";
+  display: block;
+  position: absolute;
+  right: -20px;
+  top: 4px;
+  width: 0px;
+  height: 0px;
+  border-width: 15px 10px 15px 10px;
+  border-color: transparent transparent transparent white;
+  border-style: solid;
+}
+.main ul:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: -20px;
+  top: 4px;
+  width: 0px;
+  height: 0px;
+  border-width: 15px 10px 15px 10px;
+  border-color: transparent white transparent transparent;
+  border-style: solid;
+}
+
+.main nav li {
+  display: inline-block;
+  padding: 3px 5px;
+}
+.main nav a {
+  color: #2053A0;
+  text-decoration: none;
+  border-bottom: 2px solid #2053A0;
+}
+.main nav a:hover {
+  border-width: 3px;
+}
+.main nav a:active {
+  border-width: 5px;
+}
+.main nav a:visited {
+  color: #2053A0;
+}
+
+/* Index pages for labs and notes */
+
+.page-callout {
+  position: relative;
+  margin: 1.5em 0;
+  padding: 0 1em;
+  border-radius: 5px;
+  background-color: #eee;
+  border: 2px solid #ddd;
+}
+
+.content-card {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 2em;
+}
+.content-card .title {
+  margin: 0;
+  padding: 0.2em 0.5em;
+  font-size: 2em;
+  font-variant: small-caps;
+  border-bottom: 1px #666 solid;
+}
+.content-card .link {
+  display: block;
+  text-decoration: none;
+  color: #222;
+}
+.content-card .description {
+  padding-left: 1em;
+}
+.content-card .cta {
+  margin: 0.5em 0;
+  font-weight: bold;
+  text-decoration: underline;
+}
+.content-card .cta:hover:after {
+  content: " →";
+}
+
+/* Now the main content */
+.content header h1 {
+  text-align: center;
+  font-size: 3em;
+  font-variant: small-caps;
+  border-bottom: 1px #888 solid;
+  margin: 35px 0 10px 0;
+}
+.content header em {
+  display: block;
+  text-align: center;
+  margin-top: -5px;
+  margin-bottom: 50px;
+}
+.content h2 {
+  margin-top: 1.7em;
+  margin-bottom: 1em;
+  padding: 0 0 0 0.5em;
+  border-left: 1em #ddd solid;
+  line-height: 0.5;
+  color: #ab2012;
+  font-weight: normal;
+}
+.content pre,
+.content p,
+.content img, 
+.content blockquote,
+.content ul,
+.content ol {
+  width: 91%;
+  margin: 1.42em auto;
+}
+.content pre {
+  border-radius: 2px;
+  box-shadow: #ddd 1px 1px 5px inset;
+  border: 1px #ccc solid;
+  overflow-x: auto;
+  font-size: 95%;
+  display: block;
+  background: #eee;
+  color: #222;
+  padding: 1em;
+}
+
+.content blockquote {
+  padding-left: 1.2em;
+  border-left: .5em #ccc solid;
+  margin: 1em;
+}
+.content img {
+  display: block;
+  max-width: 100%;
+  width: auto !important;
+  padding: 0.3em;
+  border: 1px #CCC solid;
+  border-radius: 2px;
+}
+
+
+/* And da footer */
+footer.main {
+  position: relative;
+  background-color: #ab2012;
+  padding: 5px 50px;
+  color: white;
+  font-family: monospace;
+  text-align: center;
+  font-size: 0.9em;
+}
+footer.main a {
+  color: #fff;
+}
+footer .smiley {
+  position: absolute;
+  display: block;
+  top: -0.42em;
+  right: 5px;
+  font-size: 4em;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* ==|== media queries ======================================================
+   Soooo hipster.
+   ========================================================================== */
+@media only screen and (max-width: 710px) {
+  /* Style adjustments for viewports that meet the condition */
+  .main .logo {
+    visibility: hidden;
+  }
+}
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */
+}
+
+
+
+/* ==|== non-semantic helper classes ========================================
+   Do I need this? Hmmm.
+   ========================================================================== */
+
+/* For image replacement */
+.ir { border: 0; font: 0/0 a; text-shadow: none; color: transparent; background-color: transparent; }
+
+/* Hide from both screenreaders and browsers: h5bp.com/u */
+.hidden { display: none !important; visibility: hidden; }
+
+/* Hide only visually, but have it available for screenreaders: h5bp.com/v */
+.visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+
+/* Extends the .visuallyhidden class to allow the element to be focusable when navigated to via the keyboard: h5bp.com/p */
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus { clip: auto; height: auto; margin: 0; overflow: visible; position: static; width: auto; }
+
+/* Hide visually and from screenreaders, but maintain layout */
+.invisible { visibility: hidden; }
+
+/* Contain floats: h5bp.com/q */
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { *zoom: 1; }
+
+
+
+/* ==|== print styles =======================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+
+@media print {
+  * { background: transparent !important; color: black !important; box-shadow:none !important; text-shadow: none !important; } /* Black prints faster: h5bp.com/s */
+  a, a:visited { text-decoration: underline; }
+  a[href]:after { content: " (" attr(href) ")"; }
+  abbr[title]:after { content: " (" attr(title) ")"; }
+  .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; } /* Don't show links for images, or javascript/internal links */
+  pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
+  thead { display: table-header-group; } /* h5bp.com/t */
+  tr, img { page-break-inside: avoid; }
+  img { max-width: 100% !important; }
+  @page { margin: 0.5cm; }
+  p, h2, h3 { orphans: 3; widows: 3; }
+  h2, h3 { page-break-after: avoid; }
+}
