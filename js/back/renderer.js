@@ -2,21 +2,22 @@
 var marked = require('marked'), 
     // Fs, to open files
     fs = require('fs');
+    mustache = require('mustache')
 
 var renderer = {};
-renderer.render = function(slug, cb) {  
+renderer.render = function(slug, dirname, cb) {  
   marked.setOptions({
      gfm: true,
      pedantic: false,
      sanitize: true
    });
  
-   fs.readFile(__dirname + '/notes/' + slug + '.md', 'utf-8', function(err,note) {
+   fs.readFile(dirname + slug + '.md', 'utf-8', function(err,note) {
      if(err) {
        cb("404", null);
      } else {
        // Grab the metadata
-       fs.readFile(__dirname + '/notes/' + slug + '.json', 'utf-8', function(err, metas) {
+       fs.readFile(dirname + slug + '.json', 'utf-8', function(err, metas) {
           if (err) {
             cb("500", null);
           } else {
@@ -33,20 +34,15 @@ renderer.render = function(slug, cb) {
      }
    });
 };
+
 renderer.renderTemplate = function(templateName, note, metas, cb) {
-  fs.readFile(__dirname + '/templates/' + templateName, 'utf-8', function(err,template) {
+  fs.readFile(__dirname + '/../../templates/' + templateName, 'utf-8', function(err,template) {
     if (err) {
       cb(err, null);
     } else {
-      var renderedTemplate = template.replace("{{note}}", marked(note));
       var metadata = JSON.parse(metas);
-      for (var key in metadata) {
-        if (metadata.hasOwnProperty(key)) {
-          console.log(key);
-          console.log(metadata[key]);
-          renderedTemplate = renderedTemplate.replace("{{" + key + "}}", metadata[key]);
-        }
-      }
+      metadata['note'] = marked(note);
+      var renderedTemplate = mustache.render(template, metadata)
       cb(null, renderedTemplate);
     }
   });
