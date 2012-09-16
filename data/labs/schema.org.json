@@ -1,0 +1,8 @@
+{
+  "id": 10,
+  "title": "Schema.org visualization",
+  "description": "A tool to visualize and navigate schema.org entity tree more easily, made with Protovis.",
+  "date-human": "Thursday, 14th April, 2012", 
+  "date-microdata": "2012-04-14T20:00Z", 
+  "location": "/labs/shema.org"
+}

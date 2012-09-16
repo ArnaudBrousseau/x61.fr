@@ -1,0 +1,8 @@
+{
+  "id": 30,
+  "title": "Nexus7's devicePixelRatio: WFT?!",
+  "description": "Google unveiled the Nexus7 during I/O conference a few weeks ago. It's a nice little tablet, easy to use, I enjoy using it. Doing some JS hacking, I recently found that this device was reporting a super weird devicePixelRatio value.",
+  "date-human": "Tuesday, 24th July, 2012", 
+  "date-microdata": "2012-07-24T11:50Z",
+  "location": "/notes/nexus7-devicepixelratio-wtf"
+}

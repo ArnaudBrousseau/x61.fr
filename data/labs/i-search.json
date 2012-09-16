@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "title": "I-SEARCH",
+  "description": "A european project I've been working on during my internship at Google.",
+  "date-human": "Thursday, 14th April, 2012", 
+  "date-microdata": "2012-04-14T20:00Z",
+  "imgURL": "http://placekitten.com/200/100",
+  "location": "/labs/i-search"
+}

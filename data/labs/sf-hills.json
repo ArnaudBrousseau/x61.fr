@@ -1,0 +1,8 @@
+{
+  "id": 40,
+  "title": "San Francisco Hills",
+  "description": "Tired of finding hills on your way when walking in San Francisco? Then this app is just for you. I built it by scraping (a bit) Google Maps to have an altitude heatmap and visualize the hills more easily. Go optimize your walks, runs and bike rides :)",
+  "date-human": "Thursday, 14th April, 2012", 
+  "date-microdata": "2012-04-14T20:00Z", 
+  "location": "/labs/sf-hills"
+}

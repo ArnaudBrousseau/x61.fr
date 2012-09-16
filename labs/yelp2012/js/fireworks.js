@@ -138,13 +138,13 @@ var Fireworks = (function() {
         // if the firework isn't using physics
         // then we know we can safely(!) explode it... yeah.
         if(!firework.usePhysics) {
-          var dice = Math.random() * 6;FireworkExplosions.yelp(firework);
+          var dice = Math.random() * 6;
           if(dice >= 5.5 ) {
             FireworkExplosions.star(firework);
           } else if (dice <= 0.5){
             FireworkExplosions.circle(firework);
           } else {
-            FireworkExplosion.yelp(firework); //In most cases, we've got Yelp pattern :)
+            FireworkExplosions.yelp(firework); //In most cases, we've got Yelp pattern :)
           }
         }
       }

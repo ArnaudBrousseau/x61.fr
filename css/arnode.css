@@ -70,7 +70,7 @@ td { vertical-align: top; }
 .chromeframe { margin: 0.2em 0; background: #ccc; color: black; padding: 0.2em 0; }
 
 
-/* ==|== Ar.no.de's styles ==================================================
+/* ==|== 0x61.fr's styles ===================================================
    Author: Arnaud Brousseau
    ========================================================================== */
 
@@ -213,7 +213,9 @@ header.main {
   margin: 0;
   padding: 0.2em 0.5em;
   font-size: 2em;
+  line-height: 1em;
   font-variant: small-caps;
+  font-weight: normal;
   border-bottom: 1px #666 solid;
 }
 .content-card .link {
@@ -233,21 +235,21 @@ header.main {
   content: " →";
 }
 
-/* Now the main content */
-.content header h1 {
+/* Now the main content - in a note*/
+.note header h1 {
   text-align: center;
   font-size: 3em;
   font-variant: small-caps;
   border-bottom: 1px #888 solid;
   margin: 35px 0 10px 0;
 }
-.content header em {
+.note header em {
   display: block;
   text-align: center;
   margin-top: -5px;
   margin-bottom: 50px;
 }
-.content h2 {
+.note h2 {
   margin-top: 1.7em;
   margin-bottom: 1em;
   padding: 0 0 0 0.5em;
@@ -256,16 +258,16 @@ header.main {
   color: #ab2012;
   font-weight: normal;
 }
-.content pre,
-.content p,
-.content img, 
-.content blockquote,
-.content ul,
-.content ol {
+.note pre,
+.note p,
+.note img, 
+.note blockquote,
+.note ul,
+.note ol {
   width: 91%;
   margin: 1.42em auto;
 }
-.content pre {
+.note pre {
   border-radius: 2px;
   box-shadow: #ddd 1px 1px 5px inset;
   border: 1px #ccc solid;
@@ -277,12 +279,12 @@ header.main {
   padding: 1em;
 }
 
-.content blockquote {
+.note blockquote {
   padding-left: 1.2em;
   border-left: .5em #ccc solid;
   margin: 1em;
 }
-.content img {
+.note img {
   display: block;
   max-width: 100%;
   width: auto !important;
@@ -313,7 +315,20 @@ footer .smiley {
   font-size: 4em;
 }
 
-
+/* Now the fun part */
+.hack {
+  min-height: 250px;
+  font-family: monospace;
+}
+.hack h1 {
+  font-size: 54px;
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  width:300px;
+  margin-left: -150px; /* =300 % 2 */
+  text-align: center;
+}
 
 
 
@@ -329,6 +344,9 @@ footer .smiley {
 @media only screen and (max-width: 710px) {
   .main .logo {
     visibility: hidden;
+  }
+  .wrapper {
+    width: 90%;
   }
   .main nav {
     font-size: 20px;

@@ -1,0 +1,9 @@
+{
+  "id": 10,
+  "title": "Hacking San Francisco Hills",
+  "description": "Playground to play around and hack this blog. Keep out fools!",
+  "date-human": "Sunday, 3rd June, 2012", 
+  "date-microdata": "2012-06-03T11:46Z",
+  "description": "Experiments with Google Maps, USGS dataset and HTML5 mobile app to create map reflecting street elevation in San Francisco.", 
+  "location": "/notes/hacking-san-francisco-hills"
+}
