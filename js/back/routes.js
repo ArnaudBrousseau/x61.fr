@@ -1,11 +1,23 @@
 // Custom renderer
 var renderer = require('./renderer.js');
+var exec = require('child_process').exec;
 
 var routes = function (app) {
+
   // Routing. Routing. Routing.
   app.get('/', function(req, res, next) {
     prepareResponse(req, res);
     renderer.render('home', res);
+  });
+  app.get('/update', function(req, res, next) {
+    exec('start && stop',
+      function (error, stdout, stderr) {
+        console.log('stdout: ' + stdout);
+        console.error('stderr: ' + stderr);
+        if (error !== null) {
+          console.error('exec error: ' + error);
+        }
+    });
   });
   app.get('/notes', function(req, res, next) {
     prepareResponse(req, res);

@@ -1,9 +1,8 @@
 {
   "id": 1,
   "title": "I-SEARCH",
-  "description": "A european project I've been working on during my internship at Google.",
-  "date-human": "Thursday, 14th April, 2012", 
-  "date-microdata": "2012-04-14T20:00Z",
-  "imgURL": "http://placekitten.com/200/100",
+  "description": "This is the European project I've been working on during my internship at Google. It's an early prototype of the interface used for multi-modal search. The full repo is available on <a href=\"https://github.com/tomayac/isearch\">Github</a> if you're curious.",
+  "date-human": "Thursday, 31st August, 2011",
+  "date-microdata": "2011-08-31T20:00Z",
   "location": "/labs/i-search"
 }
