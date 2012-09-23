@@ -54,7 +54,7 @@ var routes = function (app) {
        res.end("Not allowed");
 
     // control cross domain. Let's not allow anyone there for the moment
-    var hostAddress = "0x61.fr",
+    var hostAddress = "x61.fr",
        reqHost = req.headers.host;
 
     // disallow other domains than localhost and ar.no.de for Cross-domain

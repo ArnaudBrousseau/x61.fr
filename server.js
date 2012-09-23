@@ -42,7 +42,7 @@ var server = connect.createServer(
 server.listen(80); // 80 is the default web port and 443 for TLS
 
 // Aaaand we're live :-)
-console.log('0x61.fr is up and running!');
+console.log('x61.fr is up and running!');
 
 // this is a failsafe, it will catch the error silently and logged it the console
 // while this works, you should really try to catch the errors with a try/catch block

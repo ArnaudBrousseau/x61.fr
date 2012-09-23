@@ -149,7 +149,7 @@ renderer._mustacholate = function(string, data) {
 renderer.endResponse = function(error, res) {
   if (error) {
     res.writeHead(500, {'Content-Type': 'text/html'});
-    res.end("Whoopsy, error (" + error + "). Bad luck, something on 0x61.fr has gone awry. " + 
+    res.end("Whoopsy, error (" + error + "). Bad luck, something on x61.fr has gone awry. " + 
     "Please ping @arnaudbrousseau on Twitter if you're a good citizen.");
   } else {
     res.writeHead(200, {'Content-Type': 'text/html'});

@@ -1,8 +1,7 @@
-0x61.fr
+x61.fr
 =======
 
-Hack hack hack.
-This repo contains what's hosted at http://0x61.fr
+This repo contains what's hosted at http://x61.fr.
 
 Places you might want to check out: 
 

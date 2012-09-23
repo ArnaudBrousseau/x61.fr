@@ -1,6 +1,6 @@
 {
-  "name" : "0x61.fr",
-  "homepage" : "http://0x61.fr",
+  "name" : "x61.fr",
+  "homepage" : "http://x61.fr",
   "author" : "Arnaud Brousseau",
   "dependencies": {
       "marked": "0.2.x"
@@ -9,7 +9,7 @@
       "express": "2.5.x",
       "connect": "1.8.x"
     },
-  "repository" : {"type": "git", "url": "git@github.com:ArnaudBrousseau/0x61.fr.git"},
+  "repository" : {"type": "git", "url": "git@github.com:ArnaudBrousseau/x61.fr.git"},
   "main" : "server.js",
   "version" : "0.7.2"
 }
