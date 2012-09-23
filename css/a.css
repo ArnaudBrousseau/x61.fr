@@ -15,9 +15,9 @@ body { margin: 0; font-size: 1em; line-height: 1.4; }
 ::selection { background: #ab2012; color: #fff; text-shadow: none; }
 
 /* Links */
-a { color: #00e; }
-a:visited { color: #551a8b; }
-a:hover { color: #06e; }
+a { color: #666; }
+a:visited { color: #666; }
+a:hover { color: #222; }
 a:focus { outline: thin dotted; }
 a:hover, a:active { outline: 0; }
 
@@ -83,6 +83,7 @@ body {
   width: 70%;
   max-width: 960px;
   margin: 20px auto;
+  word-wrap: break-word;
 }
 
 header.main {
@@ -194,20 +195,27 @@ header.main {
 }
 
 /* Index pages for labs and notes */
-
+.page-title {
+  text-align: center;
+  font-size: 3em;
+  font-variant: small-caps;
+  letter-spacing: 1px;
+  border-bottom: 1px #888 solid;
+  margin: 35px 0 10px 0;
+}
 .page-callout {
-  position: relative;
-  margin: 1.5em 0;
-  padding: 0 1em;
-  border-radius: 5px;
-  background-color: #eee;
-  border: 2px solid #ddd;
+  padding: 1% 2%;
+  font-size: 1.2em;
+}
+.page-callout p {
+  margin: 0;
 }
 
 .content-card {
-  padding: 0;
-  margin: 0;
-  margin-bottom: 2em;
+  padding: 1% 2%;
+  margin: 2em 0;
+  border-radius: 4px;
+  background-color: #efefef;
 }
 .content-card .title {
   margin: 0;
@@ -236,55 +244,44 @@ header.main {
 }
 
 /* Now the main content - in a note*/
-.note header h1 {
-  text-align: center;
-  font-size: 3em;
-  font-variant: small-caps;
-  border-bottom: 1px #888 solid;
-  margin: 35px 0 10px 0;
-}
-.note header em {
+.note-date {
   display: block;
   text-align: center;
   margin-top: -5px;
   margin-bottom: 50px;
 }
-.note h2 {
-  margin-top: 1.7em;
-  margin-bottom: 1em;
-  padding: 0 0 0 0.5em;
-  border-left: 1em #ddd solid;
-  line-height: 0.5;
+.note-content h2 {
+  margin-top: 1.5em;
   color: #ab2012;
   font-weight: normal;
 }
-.note pre,
-.note p,
-.note img, 
-.note blockquote,
-.note ul,
-.note ol {
-  width: 91%;
+.note-content pre,
+.note-content p,
+.note-content img, 
+.note-content blockquote,
+.note-content ul,
+.note-content ol {
+  width: 90%;
   margin: 1.42em auto;
 }
-.note pre {
-  border-radius: 2px;
-  box-shadow: #ddd 1px 1px 5px inset;
-  border: 1px #ccc solid;
+.note-content p, .note-content img {
+  width: 100%;
+}
+.note-content pre {
+  border-radius: 4px;
   overflow-x: auto;
   font-size: 95%;
   display: block;
-  background: #eee;
+  background: #efefef;
   color: #222;
   padding: 1em;
 }
-
-.note blockquote {
+.note-content blockquote {
   padding-left: 1.2em;
-  border-left: .5em #ccc solid;
+  border-left: .5em #ab2012 solid;
   margin: 1em;
 }
-.note img {
+.note-content img {
   display: block;
   max-width: 100%;
   width: auto !important;
@@ -292,7 +289,14 @@ header.main {
   border: 1px #CCC solid;
   border-radius: 2px;
 }
-
+.note #disqus_thread {
+  width: 90%;
+  margin: 20px auto;
+  background: #efefef;
+  border-radius: 4px;
+  font-family: sans-serif;
+  padding: 2% 2%;
+}
 
 /* And da footer */
 footer.main {
@@ -331,13 +335,6 @@ footer .smiley {
 }
 
 
-
-
-
-
-
-
-
 /* ==|== media queries ======================================================
    Soooo hipster.
    ========================================================================== */
@@ -350,6 +347,7 @@ footer .smiley {
   }
   .main nav {
     font-size: 20px;
+    width: 90%;
   }
   .main ul {
     top: -34px;

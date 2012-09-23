@@ -1,8 +1,11 @@
   <header>
-    <h1>{{title}}</h1>
-    <em>Posted on <time datetime="{{date-microdata}}">{{date-human}}</time></em>
+    <h1 class="page-title">{{title}}</h1>
+    <em class="note-date">Posted on <time datetime="{{date-microdata}}">{{date-human}}</time></em>
   </header>
-  {{{note}}}
+  
+  <div class="note-content">
+    {{{note}}}
+  </div>
 
   <div id="disqus_thread">
     <noscript>Please enable JavaScript to view comments</noscript>
@@ -10,19 +13,11 @@
 
   <!-- Disqus -->
   <script type="text/javascript">
-    var disqus_shortname = 'arnode'; 
+    var disqus_shortname = '0x61'; 
     var disqus_developer = 1;
     (function() {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
       dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     })();
-  </script>
-
-  <!-- GA stuff -->
-  <script>
-    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-    s.parentNode.insertBefore(g,s)}(document,'script'));
   </script>
