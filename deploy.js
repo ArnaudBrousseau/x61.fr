@@ -28,13 +28,21 @@ var server = connect.createServer(
 
   // We don't want everyone to have deploy rights. Right?
   connect.basicAuth(function(user, pass, cb){
-    exec('~/bin/auth.sh ' + user + ' ' + pass, function(error, stdout, stderr) {
-      if (stdout === "Access granted\n") {
-        cb(null, "x61");
-      } else {
-        cb("Wanna deploy? Try again.");
-      }
-    });
+    if (!/^[0-9a-zA-Z]{1,}$/.test(user) || !/^[0-9a-zA-Z]{1,}$/.test(pass)) {
+      console.log("OMG HACKERZ ARE HERE");
+      cb("Wanna deploy? Try again.");
+      return false;
+    } else {
+      exec('~/bin/auth.sh ' + user + ' ' + pass, function(error, stdout, stderr) {
+        if (stdout === "Access granted\n") {
+          cb(null, "x61");
+          return true;
+        } else {
+          cb("Wanna deploy? Try again.");
+          return false;
+        }
+      });
+    }
   }, "Please enter deploy credentials."),
 
   connect.router(function(app) {
