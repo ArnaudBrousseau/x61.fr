@@ -323,6 +323,7 @@ footer .smiley {
 .hack {
   min-height: 250px;
   font-family: monospace;
+  line-height: 0.95;
 }
 .hack h1 {
   font-size: 54px;
@@ -332,6 +333,13 @@ footer .smiley {
   width:300px;
   margin-left: -150px; /* =300 % 2 */
   text-align: center;
+}
+.hack #matrix {
+  display: inline;
+  word-break: break-word;
+  word-wrap: break-word;
+  color: #aaa;
+  letter-spacing: 8px;
 }
 
 

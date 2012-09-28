@@ -1,1 +1,77 @@
   <h1>Hackspace</h1>
+  <div id="matrix">
+    <!-- Wait for it. Something will happen here -->
+  </div>
+  <script>
+    /**
+     * Here we go, matrix effect. Ready?
+     */
+    var matrix = function(elem) {
+      this.container = elem;
+      console.log("Taking the red pill...");
+      var screen = this.init();
+      this.display(screen);
+    };
+
+    /*
+     * This initializes our matrix with 0s.
+     * Returns a screen matrix.
+     */
+    matrix.prototype.init = function() {
+      var screenSize = this.countAvailableCharsOnScreen();
+
+      // Allocate the matrix
+      var screen = new Array(screenSize.rows);
+      for (var i = 0; i < screenSize.rows; i++) {
+        screen[i] = new Array(screenSize.cols);
+        // Fill it with 0s
+        for (var j = 0; j < screenSize.cols; j++) {
+          var randomCharCode = 33 + Math.floor(Math.random() * (126 - 33));
+          screen[i][j] = '&#' + randomCharCode + ';' ;
+        }
+      }
+      return screen;
+    };
+
+    /*
+     * This computes how many chars we have available on the screen
+     */
+    matrix.prototype.countAvailableCharsOnScreen = function() {
+      var maxWidth = window.innerWidth;
+      var maxHeight = window.innerHeight;
+
+      // Insert a char in our div and retrieve its dimension.
+      // That shoud be enough to guess how many rows/cols we have
+      this.container.innerHTML = '0';
+      var numAvailableCols = Math.floor(maxWidth/this.container.offsetWidth);
+      var numAvailableRows = Math.floor(maxHeight/this.container.offsetHeight);
+
+      return {
+        rows: numAvailableRows,
+        cols: numAvailableCols
+      };
+    };
+
+    /**
+     * Simply display the content of the screen on the screen.
+     * Straightforward, right?
+     */
+     matrix.prototype.display = function(screen) {
+       var stringToDisplay = '';
+       for (var i = 0; i < screen.length; i++) {
+         stringToDisplay += screen[i].join('') + ' ';
+       }
+       this.container.innerHTML = stringToDisplay;
+     };
+
+    // Fire this whole thing once the page has loaded
+    window.addEventListener(
+      'load',
+      function() {
+        new matrix(
+          document.getElementById("matrix")
+        );
+      },
+      false
+    );
+  </script>
