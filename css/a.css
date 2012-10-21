@@ -92,6 +92,7 @@ header.main {
 }
 .logo {
   position: absolute;
+  z-index: 1;
   top: 0px;
   left: 20px;
   width: 50px;
