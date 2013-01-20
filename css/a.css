@@ -331,9 +331,17 @@ footer .smiley {
   position: absolute;
   top: 60px;
   left: 50%;
-  width:300px;
+  width: 300px;
   margin-left: -150px; /* =300 % 2 */
   text-align: center;
+  z-index: 1;
+}
+.hack img {
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  width: 200px;
+  margin-left: -100px; /* =200 % 2 */
   z-index: 1;
 }
 .hack #matrix {
