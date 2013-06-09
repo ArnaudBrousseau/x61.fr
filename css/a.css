@@ -261,12 +261,11 @@ body {
   border: 1px #CCC solid;
   border-radius: 2px;
 }
-.note #disqus_thread {
-  width: 90%;
-  margin: 20px auto;
-  background: #efefef;
+.note .comment {
+  margin: 70px auto;
+  background: #ddd;
   border-radius: 4px;
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
   padding: 2% 2%;
 }
 
