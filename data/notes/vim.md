@@ -9,7 +9,6 @@ The answer is a single command: setf
     setf javascript
     etc
 
-
 Look up docs about a function, a command, anything
 --------------------------------------------------
 When your cursor is on a word, press maj+K.

@@ -77,7 +77,7 @@ td { vertical-align: top; }
 /* Let's begin with the logo */
 body {
   border-top: 30px #ab2012 solid;
-  font-family: georgia, serif;
+  font-family: 'Georgia', 'georgia', serif;
 }
 .wrapper {
   width: 70%;
@@ -86,104 +86,64 @@ body {
   word-wrap: break-word;
 }
 
-header.main {
-  max-width: 1180px;
-  margin: auto;
-}
 .logo {
   position: absolute;
   z-index: 1;
-  top: 0px;
-  left: 20px;
-  width: 50px;
-  height: 130px;
+  top: 7px;
+  left: 7px;
+  padding: 3px 12px 10px 12px;
   margin: 0;
-  padding: 6px 12px 6px 12px;
-  border: 2px #444 solid;
-  border-top: none;
+  border: 2px #fff solid;
   font-family: monospace;
   text-align: center;
-  line-height: 40px;
-  font-size: 40px;
-  background-color: #fff;
-  letter-spacing: 4px;
-  color: #444;
+  font-size: 30px;
+  line-height: 30px;
+  border-radius: 30px;
+  background-color: #ab2013;
+  color: #fff;
+  text-shadow: 0 -2px 2px #444;
+  -moz-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
-.logo:before {
-  content: "";
-  display: block;
-  position: absolute;
-  left: -3px;
-  top: 142px;
-  width: 0px;
-  height: 0px;
-  border-width: 26px 40px 26px 40px;
-  border-color: #444 transparent transparent transparent;
-  border-style: solid;
-}
-
-.logo:after {
-  content: "";
-  display: block;
-  position: absolute;
-  left: -3px;
-  top: 142px;
-  width: 0px;
-  height: 0px;
-  border-width: 20px 40px 20px 40px;
-  border-color: #fff transparent transparent transparent;
-  border-style: solid;
+.logo:hover {
+    -moz-transform:rotateY(180deg);
+    -webkit-transform:rotateY(180deg);
+    transform:rotateY(180deg);
 }
 
 .main nav {
   width: 70%;
   margin: 0 auto;
   position: relative;
-  font-family: monospace;
-  font-variant: small-caps;
+  font-family: 'Open Sans', sans-serif;
   font-size: 24px;
+  text-shadow: 0 -1px 1px #444;
 }
 .main ul {
   position: absolute;
-  background: white;
-  padding: 0 10px;
   top: -35px;
-  right: 10px;
-}
-.main ul:after {
-  content: "";
-  display: block;
-  position: absolute;
-  right: -20px;
-  top: 4px;
-  width: 0px;
-  height: 0px;
-  border-width: 15px 10px 15px 10px;
-  border-color: transparent transparent transparent white;
-  border-style: solid;
-}
-.main ul:before {
-  content: "";
-  display: block;
-  position: absolute;
-  left: -20px;
-  top: 4px;
-  width: 0px;
-  height: 0px;
-  border-width: 15px 10px 15px 10px;
-  border-color: transparent white transparent transparent;
-  border-style: solid;
+  right: 0;
 }
 
 .main nav li {
   display: inline-block;
-  padding: 3px 5px;
+  position: relative;
+  padding: 3px 14px;
+}
+.main nav li:before {
+    content: '/';
+    color: white;
+    display: block;
+    position: absolute;
+    top: -8px;
+    left: -6px;
+    font-size: 40px;
 }
 .main nav a {
-  color: #2053A0;
+  color: #fff;
   text-decoration: none;
-  border-bottom: 2px solid #2053A0;
 }
 .main nav a:hover {
   border-width: 3px;
@@ -192,15 +152,16 @@ header.main {
   border-width: 5px;
 }
 .main nav a:visited {
-  color: #2053A0;
+  color: #fff;
 }
 
-/* Index pages for labs and notes */
+/* Index pages for labs and notes, `page-title` also applies to article's titles */
 .page-title {
   text-align: center;
   font-size: 3em;
-  font-variant: small-caps;
-  letter-spacing: 1px;
+  line-height: 1;
+  font-family: 'Open Sans', sans-serif;
+  padding-bottom: 0.3em;
   border-bottom: 1px #888 solid;
   margin: 35px 0 10px 0;
 }
@@ -220,10 +181,10 @@ header.main {
 }
 .content-card .title {
   margin: 0;
-  padding: 0.2em 0.5em;
+  padding: 0.35em 0.5em;
   font-size: 2em;
-  line-height: 1em;
-  font-variant: small-caps;
+  line-height: 1;
+  font-family: 'Open Sans', sans-serif;
   font-weight: normal;
   border-bottom: 1px #666 solid;
 }
@@ -236,12 +197,15 @@ header.main {
   padding-left: 1em;
 }
 .content-card .cta {
+  font-family: 'Open Sans', sans-serif;
   margin: 0.5em 0;
-  font-weight: bold;
+  text-align: right;
+}
+.content-card .cta:hover {
   text-decoration: underline;
 }
-.content-card .cta:hover:after {
-  content: " →";
+.content-card .cta:hover:before {
+  content: "» ";
 }
 
 /* Now the main content - in a note*/
@@ -250,6 +214,13 @@ header.main {
   text-align: center;
   margin-top: -5px;
   margin-bottom: 50px;
+}
+.note-content h2,
+.note-content h3,
+.note-content h4,
+.note-content h5,
+.note-content h6 {
+  font-family: 'Open Sans', sans-serif;
 }
 .note-content h2 {
   margin-top: 1.5em;
@@ -304,20 +275,15 @@ footer.main {
   position: relative;
   background-color: #ab2012;
   padding: 5px 50px;
-  color: white;
-  font-family: monospace;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.8em;
+  font-weight: lighter;
   text-align: center;
-  font-size: 0.9em;
+  color: white;
+  text-shadow: 0 -1px 1px #444;
 }
 footer.main a {
   color: #fff;
-}
-footer .smiley {
-  position: absolute;
-  display: block;
-  top: -0.42em;
-  right: 5px;
-  font-size: 4em;
 }
 
 /* Now the fun part */
@@ -383,6 +349,23 @@ footer .smiley {
   }
 }
 
+@media only screen and (max-width: 320px) {
+  .main nav {
+    font-size: 18px;
+    width: 100%;
+  }
+  .main nav li {
+      padding: 3px 8px;
+  }
+  .main nav li:before {
+    top: -8px;
+    left: -8px;
+    font-size: 35px;
+  }
+  .main ul {
+    top: -32px;
+  }
+}
 
 /* ==|== non-semantic helper classes ========================================
    Do I need this? Hmmm.
