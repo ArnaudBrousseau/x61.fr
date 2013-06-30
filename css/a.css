@@ -98,19 +98,19 @@ body {
   text-align: center;
   font-size: 30px;
   line-height: 30px;
-  border-radius: 30px;
+  border-radius: 60px;
   background-color: #ab2013;
   color: #fff;
   text-shadow: 0 -2px 2px #444;
-  -moz-transition: all 0.5s ease;
-  -webkit-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+  -moz-transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .logo:hover {
-    -moz-transform:rotateY(180deg);
-    -webkit-transform:rotateY(180deg);
-    transform:rotateY(180deg);
+    border: 24px #fff solid;
+    left: -15px;
+    top: -15px;
 }
 
 .main nav {
@@ -162,31 +162,28 @@ body {
   line-height: 1;
   font-family: 'Open Sans', sans-serif;
   padding-bottom: 0.3em;
-  border-bottom: 1px #888 solid;
+  border-bottom: 1px #999 solid;
   margin: 35px 0 10px 0;
-}
-.page-callout {
-  padding: 1% 2%;
-  font-size: 1.2em;
 }
 .page-callout p {
   margin: 0;
+  font-size: 1.2em;
 }
 
 .content-card {
-  padding: 1% 2%;
-  margin: 2em 0;
-  border-radius: 4px;
+  padding: 10px;
+  margin: 1.5em 0 2em 0;
+  border-radius: 8px;
   background-color: #efefef;
 }
 .content-card .title {
   margin: 0;
-  padding: 0.35em 0.5em;
+  padding: 10px 10px 20px 10px;
   font-size: 2em;
   line-height: 1;
   font-family: 'Open Sans', sans-serif;
   font-weight: normal;
-  border-bottom: 1px #666 solid;
+  border-bottom: 1px #999 solid;
 }
 .content-card .link {
   display: block;
@@ -194,18 +191,15 @@ body {
   color: #222;
 }
 .content-card .description {
-  padding-left: 1em;
+  padding-left: 10px;
+  margin: 20px 0 0 0;
 }
 .content-card .cta {
   font-family: 'Open Sans', sans-serif;
-  margin: 0.5em 0;
-  text-align: right;
+  margin: 10px 0 0 0;
 }
 .content-card .cta:hover {
   text-decoration: underline;
-}
-.content-card .cta:hover:before {
-  content: "» ";
 }
 
 /* Now the main content - in a note*/
@@ -214,6 +208,10 @@ body {
   text-align: center;
   margin-top: -5px;
   margin-bottom: 50px;
+}
+.note-content {
+  font-size: 1.1em;
+  max-width: 550px;
 }
 .note-content h2,
 .note-content h3,
