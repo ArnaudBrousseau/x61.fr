@@ -1,8 +1,10 @@
-Context
-=======
+## Context
 During a Hackathon, a coworker and me decided to tackle the problem of creating
-a new language that runs in the browser. None of us is a compiler expert, and I
-personally didn't take any compiler course. The way we went about it is:
+a new language which runs in the browser. Our end goal: be able to write script
+elements in our language and have the  browser run it for us, in realtime.
+
+## Goals
+None of us is a static compiler/JIT expert so the way we went about it is:
 - Create a toy language and its toy lexer/compiler
 - Make our toy language compile to [LLVM](http://llvm.org/)
 - Use LLVM's tools to take advantage of the JIT
@@ -12,14 +14,23 @@ Hackathons at Yelp last 2 days. That's not much time. To prepare ourselves for
 these 48 hours and to make them as productive as they could be, we set up our
 environment first.
 
-Setting up a dev environment
-============================
-I'm usually developing on a MacBoook, so I tried first to setup llvm and friends on my local machine. Huge failure, for which I don't have a solution yet.
+## Setting up LLVM environment
+I'm usually developing on a MacBoook, so I tried first to setup llvm and
+friends on my local machine. Huge failure, for which I don't have a solution
+yet.
 
-MacOSX makes you install XCode to install compiler tools like gcc or g++. Com'on Apple, really?
-XCode also comes with some version of llvm installed. As a result executing `locate llvm | wc -l` yields `610` on my machine. Basically some sort of tools for llvm is installed with XCode and each version of the iPhone simulator, and also macports. No idea why those were here in the first place.
+### On OSX
+MacOSX makes you install XCode to install compiler tools like gcc or g++.
+Com'on Apple, really?  
+XCode also comes with some version of llvm installed. As a result executing
+`locate llvm | wc -l` yields `610` on my machine. Basically some sort of tools
+for llvm is installed with XCode and each version of the iPhone simulator, and
+also macports. No idea why those were here in the first place.
 
-Since I had no idea what version of the tools I should go with I decided to go the hard route and install everything from source in my homedir, following instructions from the [LLVM getting started page](http://llvm.org/docs/GettingStarted.html)
+Since I had no idea what version of the tools I should go with I decided to go
+the hard route and install everything from source in my homedir, following
+instructions from the [LLVM getting started
+page](http://llvm.org/docs/GettingStarted.html)
 
     cd ~/bin/
     mkdir llvm
@@ -37,7 +48,7 @@ Since I had no idea what version of the tools I should go with I decided to go t
     make -j10
 
 The listing above generated lots of output, consumed lots of my CPU, and ended with an error:
- 
+
     /Users/abrousse/bin/llvm/llvm/projects/compiler-rt/lib/asan/asan_malloc_mac.cc:19:10: fatal error: 'CoreFoundation/CFBase.h' file not found
     #include <CoreFoundation/CFBase.h>
              ^
@@ -57,24 +68,30 @@ The listing above generated lots of output, consumed lots of my CPU, and ended w
     make[1]: *** [clang/.makeall] Error 2
     make: *** [all] Error 1
 
-So, fuckit. Another dead end. I'm suspecting all revisions from clang, llvm and other projects aren't tested together that often. I think something to try next would be checking out release-tagged revisions instead of the latest master from each project. WHY THE HELL DON'T THEY HAVE SUBMODULES? That drives me nuts.
+So, fuckit. Another dead end. I'm suspecting all revisions from clang, llvm and
+other projects aren't tested together that often. I think something to try next
+would be checking out release-tagged revisions instead of the latest master
+from each project. WHY THE HELL DON'T THEY HAVE SUBMODULES? That drives me
+nuts.
 
-Solution for me was to install things from a Ubuntu VM. Package management is saner, and installing llvm is a piece of cake:
+### On Ubuntu
+Solution for me was to install things from a Ubuntu VM. Package management is
+saner, and installing llvm is a piece of cake:
 
     sudo apt-get install llvm
 
-All done! Just check that the output of `llvm --version` gives you 3.0 and you're good to go.
+All done! Just check that the output of `llvm --version` gives you 3.0 and
+you're good to go.
+
+### Back to OSX
+Back to OSX. I tried what's on the [release
+page](http://llvm.org/releases/download.html), where they have precompiled
+binaries for OSX. On my version of OSX (10.7.5), LLVM 3.3 didn't work properly.
+Building the 3.0 tools worked properly with what's in
+https://github.com/bukzor/hackathon2013.7 (check out the `macosx branch`).
 
 
-Then I tried what's on the [release page](http://llvm.org/releases/download.html)
-
-On macOSX 3.3 didn't work with my version
-Building the 3.0 tools worked properly with what's in https://github.com/bukzor/hackathon2013.7:macosx
-
-
-
-
-# Goals 2.0
+## Goals 2.0
 _End goal: Do hypercube animation by writing a `<script src="hyper.ks" type="application/kaleidoscope">...</script>`_
 
 Sub-goals:
@@ -83,3 +100,7 @@ Sub-goals:
 - Parser with tests -- converts tokens to AST
 - Runtime/Interpreter -- Uses AST to run the program in the browser
 - (optional) Compiler -- converts AST to asm.js
+
+## Results
+We worked in the open, at https://github.com/bukzor/hackathon2013.7.  
+Wanna try it out? http://bukzor.github.io/hackathon2013.7/

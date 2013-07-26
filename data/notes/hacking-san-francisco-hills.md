@@ -1,5 +1,3 @@
-
-
 What's in my mind
 -----------------
 
@@ -108,9 +106,7 @@ What I originally envisioned was a heatmap-like visualization, where the high ar
 Plan B: use a standard [Fusion Table layer](https://developers.google.com/maps/documentation/javascript/layers#FusionTables), with a custom, semi-transparent overlay to let the map shine through. Easy you say?
 
  
-Initial deception
------------------
-
+## Initial deception
 [Not quite](http://code.google.com/p/fusion-tables/issues/detail?id=69).
 
 So, it seems I can't have a nice transparent png as my custom marker. In this issue, there's a workaround which involves using the Fusion API directly, but I don't really feel like it.
@@ -124,9 +120,7 @@ The result I have so far is [not that bad](http://ar.no.de/labs/sf-hills-baby/fi
 
 Looks like a perfect time to step back to think again.
 
-A New Battleplan
-----------------
-
+## A New Battleplan
 I decided to stay within Google environment by leveraging the [Elevation](https://developers.google.com/maps/documentation/javascript/elevation) and [Geocoding](https://developers.google.com/maps/documentation/geocoding/) APIs.
  
 The Geocoding API will transform information like "Market and 3rd, San Francisco, CA" into (latitude, longitude) points. The elevation API will then tell the elevation of a certain (lat, lng) point.
@@ -145,20 +139,14 @@ Let's break down the problem into smaller bits:
 
 Now that we have this battleplan, let's proceed, step-by-step.
 
-Gettin' the data
-----------------
-
+## Gettin' the data
 ![Geocoder in action](/img/content/street-geocoding.png)
 
-Compute the paths
------------------
-
+## Compute the paths
 Color treatment: http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript
 
 
-Polishing and final result
-------------
-
+## Polishing and final result
 Annnnd, success!
 Polishing:
 
