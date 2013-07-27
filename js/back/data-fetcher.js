@@ -26,11 +26,11 @@ dataFetcher.get = function(name, type, callback) {
   if (type === 'dir') {
     // We need to find all JSON files in this directory
     this.getAllJSON(this.folder + name + '/', callback);
-    
+
   } else if (type === 'md') {
     // We need to fetch a file and render it
     this.getMarkdown(this.folder + name + '.' + type, callback);
-    
+
   } else if (type === 'json') {
     // Eaaaaasy case
     this.getJSON(this.folder + name + '.' + type, callback);
@@ -54,7 +54,7 @@ dataFetcher.getMarkdown = function(filename, callback) {
     } else {
       callback(null, marked(data));
     }
-  });  
+  });
 };
 
 dataFetcher.getAllJSON = function(dirname, callback) {
@@ -72,9 +72,9 @@ dataFetcher.getAllJSON = function(dirname, callback) {
         } else {
           jsonData.push(JSON.parse(data));
           numJsonFilesToProcess -= 1;
-          
+
           // Call our callback if we're done.
-          if (numJsonFilesToProcess === 0) { 
+          if (numJsonFilesToProcess === 0) {
             callback(null, jsonData);
           }
         }

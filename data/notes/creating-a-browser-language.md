@@ -92,9 +92,10 @@ https://github.com/bukzor/hackathon2013.7 (check out the `macosx branch`).
 
 
 ## Goals 2.0
-_End goal: Do hypercube animation by writing a `<script src="hyper.ks" type="application/kaleidoscope">...</script>`_
+_End goal: Do hypercube animation by writing a `<script src="woot.bl" type="application/x-bogolisp">...</script>`_
 
 Sub-goals:
+
 - (optional) Chrome extension to parse and evaluate what's in the script tags
 - Lexer with tests -- converts string to tokens, also known as scanner
 - Parser with tests -- converts tokens to AST
