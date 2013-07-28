@@ -1,0 +1,8 @@
+{
+  "id": 50,
+  "title": "BogoLisp ®",
+  "description": "BogoLisp is a lisp running in your browser. The lexer, parse and interpreter for it are written in JavaScript and packaged in a Chrome extension. BogoLisp was born during Yelp's 11th Hackathon, in July 2013. BogoLisp is completely open-sourced on GitHub.",
+  "date-human": "Friday, 26th July, 2013",
+  "date-microdata": "2013-07-26T16:00Z",
+  "location": "http://bukzor.github.io/hackathon2013.7/"
+}
