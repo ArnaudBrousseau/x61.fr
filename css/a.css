@@ -137,9 +137,9 @@ body {
     color: white;
     display: block;
     position: absolute;
-    top: -8px;
-    left: -6px;
-    font-size: 40px;
+    top: -10px;
+    left: -10px;
+    font-size: 41px;
 }
 .main nav a {
   color: #fff;
@@ -346,7 +346,7 @@ footer.main a {
   }
 }
 
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 400px) {
   .main nav {
     font-size: 18px;
     width: 100%;
@@ -355,9 +355,9 @@ footer.main a {
       padding: 3px 8px;
   }
   .main nav li:before {
-    top: -8px;
-    left: -8px;
-    font-size: 35px;
+    top: -10px;
+    left: -10px;
+    font-size: 39px;
   }
   .main ul {
     top: -32px;
