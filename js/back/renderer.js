@@ -66,10 +66,9 @@ renderer.renderIndex = function(indexName, res) {
           // Builds the content index
           var contentList = "";
 
-          // First, sort the data by content item id
-          data.sort(function(a, b) {
-            return b.id - a.id;
-          });
+          // Sorts our posts/lab items by id
+          // TODO: sort by date modified instead
+          data.sort(function(a, b) { return b.id - a.id; });
 
           for (var i = 0; i < data.length; i++) {
             contentList += renderer._mustacholate(tmpl, data[i]) + "\n";
