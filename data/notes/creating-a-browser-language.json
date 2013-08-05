@@ -2,7 +2,7 @@
   "id": 80,
   "title": "Creating a browser language",
   "date-human": "Sunday, 23rd July, 2013", 
-  "date-microdata": "2012-07-23T10:15Z",
+  "date-microdata": "2013-07-23T10:15Z",
   "description": "Through the combination of some basic compiler knowledge, LLVM and Chrome's PNaCl support, writing a new language that runs in a browser becomes achievable.", 
   "location": "/notes/creating-a-browser-language"
 }
