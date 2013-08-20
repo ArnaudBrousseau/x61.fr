@@ -14,6 +14,7 @@ method and its associated test runner. Usually those subjects are mentioned
 briefly towards the end of a textbook. Not this time.
 
 Reasons I'm writing about reading "Secrets of the JavaScript Ninja":
+
 1. Writing about a something helps you remember it better
 2. I'm adding some reference and extra information here and there.
 3. Hopefully this is useful to you, the reader, to a) get a sense of what's in
@@ -24,6 +25,7 @@ Reasons I'm writing about reading "Secrets of the JavaScript Ninja":
 Created via the `Function` constructor, functions are special objects with
 one superpower: they can be **invoked**. Besides that, functions are object and
 nothing but objects:
+
 - they're created via literals `function <optionalName> (<optionalArguments) {<functionBody>}`
 - can be assigned to variables or properties
 - can be passed as function parameters and returned as function results
@@ -66,6 +68,7 @@ How can you get around that?
 `this` is defined as the **function context**. Available within a function body,
 `this` should really be referred to as  **invocation context**, because its value
 varies based on the way a function is invoked:
+
 - as a function, `this` refers to the global context `window`
 - as a method, `this` refers to the object owning it
 - as a constructor, `this` refers to the newly created object
