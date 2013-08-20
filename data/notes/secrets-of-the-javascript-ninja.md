@@ -22,7 +22,7 @@ Reasons I'm writing about reading "Secrets of the JavaScript Ninja":
 ## Functions
 
 Created via the `Function` constructor, functions are special objects with
-one superpower: they can be _invoked_. Besides that, functions are object and
+one superpower: they can be **invoked**. Besides that, functions are object and
 nothing but objects:
 - they're created via literals `function <optionalName> (<optionalArguments) {<functionBody>}`
 - can be assigned to variables or properties
@@ -41,9 +41,9 @@ and
     sdfsd
 
 In both cases, the function can be called via `blah()`. However, there's a
-crucial difference: in the first case, the function is _named_ `blah` which
+crucial difference: in the first case, the function is **named** `blah` which
 means the function will be assigned a property `name` with the value `blah`.  
-In the second case, we're assigning an _anonymous_ function to the variable
+In the second case, we're assigning an **anonymous** function to the variable
 `blah`. The function's `name` property in this case will be `''`.
 
 ### Arguments and Invocation
@@ -55,7 +55,7 @@ standard function parameters is that they are _implicit_. You won't see them in
 #### Arguments
 `arguments` represent a list of all arguments passed to a function. It has
 array-like accessors (`arguments[i]`) and `length` (`arguments.length`) but
-_is not an array_ (`arguments.slice(1)` will fail for instance).  
+**is not an array** (`arguments.slice(1)` will fail for instance).  
 How can you get around that?
 
     Object.prototype.toString.call
@@ -63,8 +63,8 @@ How can you get around that?
     etc
 
 #### Invoking a function, and `this`
-`this` is defined as the _function context_. Available within a function body,
-`this` should really be referred to as  _invocation context_, because its value
+`this` is defined as the **function context**. Available within a function body,
+`this` should really be referred to as  **invocation context**, because its value
 varies based on the way a function is invoked:
 - as a function, `this` refers to the global context `window`
 - as a method, `this` refers to the object owning it
@@ -112,7 +112,7 @@ previous solution.
         }
     };
 
-Last option: `callee` (going to go away soon, use sparingly).
+Last option: `callee` (going to go away in later versions of JS, use sparingly).
 
     var math = {
         'fact': function (x) {
@@ -158,3 +158,42 @@ arguments declared in their signature. By comparing `fn.length` and
     addMethod(obj, 'method', function() { /* do something */ });
     addMethod(obj, 'method', function(a) { /* do something with a */ });
     addMethod(obj, 'method', function(a, b) { /* do something with a and b */ });
+
+## Closures
+Closures are probably one of the most confusing concepts when someone with a
+classical object-oriented background comes to JavaScript. Resig's definition of
+it: **closures allow a function to access all the variables, as well as other
+functions, that are in scope when the function itself is declared.**  
+Later in the chapter: **That's what closures are all about. They create a
+"safety bubble," if you will, of the function and the variables that are in
+scope at the point of the function's declaration [...] This "bubble,"
+containing the function and its variables, stays around as long as the function
+itself does.**
+
+Let's look at some code samples to go over the main use cases for closures.
+
+### Private variables
+    function Counter() {
+        var count = 0; // visibility limited to Counter's inner scope
+        this.increment = function() { count++; }
+        this.getCount = function() { return count; }
+    };
+    // Can't view/modify count from here. You have to go through Counter.getCount()
+
+### Callbacks and timers
+TODO
+
+### Binding function contexts
+TODO
+
+### Partially applying functions (Currying)
+TODO
+
+### Function wrapping
+TODO
+
+### Immediate functions
+TODO
+
+## Prototypes
+TODO
