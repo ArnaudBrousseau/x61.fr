@@ -1,8 +1,8 @@
 {
   "id": 20,
   "title": "Deep Dive in JavaScript Loading",
-  "description": "Deep Dive in JavaScript Loading - Writing in progress",
+  "description": "An excellent article by Jake Archibald, published on HTML5Rocks.com. IMO a must read on how JS loads in (modern) browsers.",
   "date-human": "Sunday, 15th September, 2012", 
   "date-microdata": "2012-09-15T20:00Z", 
-  "location": "/notes/deep-dive-in-javascript-loading"
+  "location": "http://www.html5rocks.com/en/tutorials/speed/script-loading"
 }
