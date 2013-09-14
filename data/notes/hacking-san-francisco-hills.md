@@ -246,8 +246,10 @@ Code to compute color for a given path:
 
 ## Result
 After some amount of data cleaning (Google's geocoder is sometimes not
-accurate, see how sloppy Geary is!), the final result, is available at
-http://x61.fr/labs/sf-hills
+accurate, see how sloppy Geary is!) the final result is available at
+http://x61.fr/labs/sf-hills. It's not over (I'm lazy and I have not finished
+all parts of SF yet) but it gives you a pretty good idea of where hills are
+when walking in the popular north eastern part of the city.
 
 ## Further reading
 - Old article but really cool read (at least that's what I thought): http://www.datapointed.net/2009/11/the-steeps-of-san-francisco/  
