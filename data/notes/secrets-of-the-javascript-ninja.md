@@ -200,3 +200,34 @@ TODO
 
 ## Prototypes
 TODO
+
+## Timers
+JavaScript is _single-threaded_. That's really important to understand. Once
+you grasp the fact that the browser has no choice but to queue handlers when
+events are firing at the same time, understanding why timers cannot be reliable
+is easy.
+
+Browser APIs are well known: `window.setTimeout` and `window.setInterval` to
+create timers, `window.clearTimeout` and `window.clearInterval` to clear them.
+
+One nifty trick for all browsers and IE > 9: timer functions actually take
+arguments in their signature: `window.setInterval(myfunction, 100, arg1, arg2)`
+
+There's a difference between `window.setInterval(fn, 10)` and
+`window.setTimeout(function fn() { window.setTimeout(fn, 10)}, 10)`. Second
+version is guaranteed to run every 10ms or more. First version will try to
+execute every 10ms regardless of what happened before.
+
+Cutting expensive computation into manageable chunks is an interesting
+application of timers. Instead of doing a 100% of the work in a big chunk you
+can choose to schedule manageable chunk via `setTimeout` thus enabling the
+browser to do some work after each chunk finishes and before the next one
+begins. Say a click event happened during a computation: the browser would get
+a chance to execute the associated handler right after the current chunk is
+done as opposed to waiting until  the end of the whole computation.
+
+Timers are also super useful to build async test suites and centralized timers.
+The idea is to have a single timer handle a queue (of tests to run of
+animations/functions to execute) so that the browser is not overwhelmed by
+multiple timers. This centralized timer technique also gives us a guarantee
+about order of execution that we wouldn't get otherwise.
