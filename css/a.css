@@ -234,13 +234,13 @@ body {
   width: 90%;
   margin: 1.42em auto;
 }
-.note-content p, .note-content img {
+.note-content p, .note-content img, .note-content pre {
   width: 100%;
 }
 .note-content pre {
   border-radius: 4px;
   overflow-x: auto;
-  font-size: 95%;
+  font-size: .7em;
   display: block;
   background: #efefef;
   color: #222;
