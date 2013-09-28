@@ -246,6 +246,13 @@ body {
   color: #222;
   padding: 1em;
 }
+.note-content code {
+  font-size: .9em;
+  padding: 2px;
+  background: #eee;
+  border-radius: 2px;
+  text-shadow: 0 -1px #fff;
+}
 .note-content blockquote {
   padding-left: 1.2em;
   border-left: .5em #ab2012 solid;
@@ -258,6 +265,9 @@ body {
   padding: 0.3em;
   border: 1px #CCC solid;
   border-radius: 2px;
+}
+.note-content li {
+    margin: 0.5em 0;
 }
 .note .comment {
   margin: 70px auto;
