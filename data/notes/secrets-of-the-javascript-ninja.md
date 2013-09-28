@@ -350,22 +350,22 @@ When the W3C had to choose, they didn't. Instead W3C's model lets you register
 handlers for capturing or bubbling phase.  
 Concretely, compliant browsers will do the following when an event is triggered:
 
-1. start at DOM tree's root node, see if there are handlers set for capturing phase for our event type. If yes, call them.
-2. go down one level in the tree, see if there are handlers set for capturing phase for out event type. If yes, call them.
-3. go down one more level, see if there are handlers set for capturing phase for out event type. If yes, call them.
-4. ...etc... (go as deep as necessary to reach the event's target)
-5. on the event's target, see if there are handlers set for capturing phase for out event type. If yes, call them.
-6. on the event's target, see if there are handlers set for bubbling phase for out event type. If yes, call them.
-7. go up one level in the tree, see if there are handlers set for bubbling phase for out event type. If yes, call them.
-8. go up one more level, see if there are handlers set for bubbling phase for out event type. If yes, call them.
-9. ...etc... (go up as necessary until we reach the DOM tree's root)
-10. on DOM tree's root node, see if there are handlers set for bubbling phase for our event type. If yes, call them.
+1. start at DOM tree's root node. See if there are handlers set for **capturing phase** for our event type. If yes, call them.
+2. go down one level in the tree, do the same (check and call potential handlers set for capturing)
+3. go down one more level, do the same
+4. ...etc... (do the same and go down until we reach our event's target)
+5. on the event's target (i.e.,the button we clicked) check and call potential handlers set for capturing
+6. on the event's target, see if there are handlers set for **bubbling phase** for out event type. If yes, call them.
+7. go up one level in the tree, do the same (check and call potential handlers set for bubbling)
+8. go up one more level, do the same
+9. ...etc... (do the same and go up until we reach the DOM tree's root)
+10. on DOM tree's root node, check and call potential handlers set for bubbling
 
 The standard API `elem.addEventListener(type, handler, useCapture)` has 3
 params. First one is the type of event to listen to ('click', 'focus', etc),
 second is the handler we want to trigger when the type of event we're listening
 to happens. The third parameter `useCapture` is the propagation phase we're interested in.
-want to use:
+
 - if set to `false`, your handler will be called during the bubbling phase (step 6 through 10)
 - if set to `true`, your handler will be called during the capturing phase (step 1 through 5)
 - `useCapture` defaults to `false`
@@ -376,6 +376,7 @@ propagation at any point. Inside a handler, `e.stopPropagation()` and
 
 That was a lengthy explanation but I think it describes what happens fairly
 accurately. I hope that it will help you understand a few things. Namely:
+
 - `addEventListener('click', handler)` will have consistent behavior in IE and
   modern browsers out-of-the-box (remember, IE's model only supports bubbling
   phase). **That's why jQuery won't let you set register handlers for capturing
@@ -429,8 +430,9 @@ the basic concept of event delegation.
 To put it in simple terms: event delegation is the process of registering a
 handler high up in the DOM tree to handle events happening lower. Event
 delegation is made possible by 2 things:
-1. event bubbling
-2. ability to inspect event object's `target` property in handlers
+
+- event bubbling
+- ability to inspect event object's `target` property in handlers
 
 Concretely, instead of just doing some work, a delegated handler will **check
 the target first** and **then** do some work:
