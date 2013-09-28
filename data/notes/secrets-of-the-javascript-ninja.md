@@ -51,7 +51,7 @@ In the second case, we're assigning an **anonymous** function to the variable
 ### Arguments and Invocation
 `this` and `arguments` are implicit parameters passed to every function. They
 are just that. Parameters. The difference between `this`, `arguments` and
-standard function parameters is that they are _implicit_. You won't see them in
+standard function parameters is that they are *implicit*. You won't see them in
  function signatures but they'll be available from within function bodies.
 
 #### Arguments
@@ -323,3 +323,149 @@ Major quirks that Resig talks about:
 - more problems around the `style` attribute: measuring width/height, getting
   color, opacity or pixel measures. One interesting API: `getComputedStyle` (or IE's `currentStyle`) gives you the active CSS
   property/value pairs for an element.
+
+## Events
+In a big chapter about DOM events and their quirks Resig basically goes through
+the process of implementing jQuery's event system, including custom events.
+While being extremely interesting I wish Resig was more upfront about what this
+chapter is about. Another good title for it could be "Understanding jQuery's
+events system".  
+That being said I learned a lot about events while reading this chapter and it
+crystallized several important concepts.
+
+### Understanding Event Propagation
+The order in which events are triggered throughout the DOM tree is not
+consistent across browser.
+
+Netscape implements event propagation "outside-in". An event propagates
+from the root of the DOM tree all the way through its target (a button on which
+you clicked for instance). This event propagation model is referred to as
+**capturing**.
+
+IE implements it in the exact opposite way: "inside-out". An event
+propagates from the target element up to the DOM tree's root. This event
+propagation model is referred to as **bubbling**
+
+When the W3C had to choose, they didn't. Instead W3C's model lets you register
+handlers for capturing or bubbling phase.  
+Concretely, compliant browsers will do the following when an event is triggered:
+
+1. start at DOM tree's root node, see if there are handlers set for capturing phase for our event type. If yes, call them.
+2. go down one level in the tree, see if there are handlers set for capturing phase for out event type. If yes, call them.
+3. go down one more level, see if there are handlers set for capturing phase for out event type. If yes, call them.
+4. ...etc... (go as deep as necessary to reach the event's target)
+5. on the event's target, see if there are handlers set for capturing phase for out event type. If yes, call them.
+6. on the event's target, see if there are handlers set for bubbling phase for out event type. If yes, call them.
+7. go up one level in the tree, see if there are handlers set for bubbling phase for out event type. If yes, call them.
+8. go up one more level, see if there are handlers set for bubbling phase for out event type. If yes, call them.
+9. ...etc... (go up as necessary until we reach the DOM tree's root)
+10. on DOM tree's root node, see if there are handlers set for bubbling phase for our event type. If yes, call them.
+
+The standard API `elem.addEventListener(type, handler, useCapture)` has 3
+params. First one is the type of event to listen to ('click', 'focus', etc),
+second is the handler we want to trigger when the type of event we're listening
+to happens. The third parameter `useCapture` is the propagation phase we're interested in.
+want to use:
+- if set to `false`, your handler will be called during the bubbling phase (step 6 through 10)
+- if set to `true`, your handler will be called during the capturing phase (step 1 through 5)
+- `useCapture` defaults to `false`
+
+Another important thing to consider: browsers have hooks to stop event
+propagation at any point. Inside a handler, `e.stopPropagation()` and
+`e.cancelBubble = true;` (in IE) will do just that.
+
+That was a lengthy explanation but I think it describes what happens fairly
+accurately. I hope that it will help you understand a few things. Namely:
+- `addEventListener('click', handler)` will have consistent behavior in IE and
+  modern browsers out-of-the-box (remember, IE's model only supports bubbling
+  phase). **That's why jQuery won't let you set register handlers for capturing
+  phase**. Letting you doing do wouldn't be cross-browser compatible. jQuery
+  supports bubbling in a cross browser fashion by emulating bubbling. In
+  browsers that don't support it, the library manually walks the DOM tree up to
+  call registered handlers. That's also how jQuery goes about supporting custom
+  events (`someJqueryElem.bind('my-custom-event', handler)`).
+- `document.addEventListener(type, handler)` is a catch-all that will run
+  **after** every handler for this type in the path Root-Target has executed.
+- `document.addEventListener(type, handler, true)` is a catch-all that will run
+  **before** every handler for this type of event in the path Root-Target
+  executes.
+- use `stopPropagation` and `cancelBubble = true` with **extreme caution**.
+  When you do that you're effectively preventing other handlers scheduled
+  to run after you from doing so.
+- when registering multiple handlers on the same element for the same event
+  type, order **is not guaranteed**.
+
+A good page to help you understand that if the explanation above didn't stick:
+[Quirksmode On Events](http://www.quirksmode.org/js/events_order.html)
+
+### jQuery's Event System
+At its core, jQuery's event system doesn't rely much on the browser to work.
+There are so many quirks that jQuery had to came up with a solution to
+implement event binding, unbinding and triggering in a consistent manner. A few
+key things:
+
+- the only handler actually registered by jQuery is a dispatcher. There is one
+  dispatcher per event type.
+- to keep track of individual handlers, each DOM element is given a `data`
+  property. Concretely it's a mapping of event type to an array of handler for
+  that type.
+- a dispatcher is responsible for looking at a DOM's data store and calling
+  handlers if it finds handlers registered for its type (remember, there is one
+  dispatcher per event type).
+- thus registering/unregistering a handler becomes equivalent to "add/remove a
+  function to a DOM's data store"
+
+This is really clever because it enables inventory of handlers at any point in
+time and programmatic triggering of registered handler.
+
+If you're interested in the nitty-gritty details head to [jQuery's
+source](https://github.com/jquery/jquery/blob/master/src/event.js)
+
+### Concept Of Event Delegation
+jQuery's `.delegate(type, selector, handler)` (or `.on(type, selector,
+handler)` in later versions) can appear really magic if you don't understand
+the basic concept of event delegation.
+
+To put it in simple terms: event delegation is the process of registering a
+handler high up in the DOM tree to handle events happening lower. Event
+delegation is made possible by 2 things:
+1. event bubbling
+2. ability to inspect event object's `target` property in handlers
+
+Concretely, instead of just doing some work, a delegated handler will **check
+the target first** and **then** do some work:
+
+    var doWork = function() { console.log('did some work'); }
+    var button = document.findElementsByClassName('a-button')[0];
+
+    // NON-DELEGATED version (the handler is bound directly)
+    button.addEventListener('click', doWork, false); // use bubbling
+
+    // DELEGATED version (we're checking the target first)
+    document.addEventListener('click', function(e) {
+        if (e.target.className === 'a-button') { // <== "Target check"
+            doWork();
+        }
+    }, false); // use bubbling too
+
+The delegated version above has several advantages:
+
+- a button with class 'a-button' can be inserted in the DOM **after** we
+  perform event binding. It's crucial if you're inserting content after an XHR
+  request for instance
+- multiple buttons with a class 'a-button' could be on the page, things will
+  just work. This is awesome if you have behavior that you want to attach to a
+  big number of elements. Say you want to have JS behavior for all cells of a
+  HUGE table. Instead of looping through all the elements to bind a handler to
+  each and every one of those cells you can use delegation to bind a single
+  handler to a common container (the containing `<table>` element for instance)
+- hey we're not bound to just buttons anymore! Every element on page that
+  satisfies our target check gets to trigger `doWork` when clicked on.
+
+Of course jQuery is more sophisticated and lets you delegate your handler on a
+container by specifying a *jQuery selector*. Under the hoods jQuery will check
+if the event target matches this jQuery selector. If it does, your handler will
+be called. Not so magic right?
+
+## DOM Manipulation
+Is next up for reading.
