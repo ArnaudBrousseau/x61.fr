@@ -33,18 +33,17 @@ nothing but objects:
   property and a `call` and `apply` method)
 
 ### Function Declaration
-The difference between
+Two main ways to declare a function:
 
+    // option 1
     function blah() { console.log('called'); }
-
-and
-
+    // option 2
     var blah = function() { console.log('called'); };
-    sdfsd
 
-In both cases, the function can be called via `blah()`. However, there's a
-crucial difference: in the first case, the function is **named** `blah` which
-means the function will be assigned a property `name` with the value `blah`.  
+In both cases the function can be called via `blah()` after its declaration.
+However there's a crucial difference: in the first case the function is
+**named** `blah` which means the function will be assigned a property `name`
+with the value `blah`.  
 In the second case, we're assigning an **anonymous** function to the variable
 `blah`. The function's `name` property in this case will be `''`.
 
