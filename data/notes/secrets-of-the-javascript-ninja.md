@@ -1,6 +1,6 @@
 ## Who's This Book For?
 "Secrets of the JavaScript Ninja" is designed for intermediate to advanced
-JavaScript programmers. It expects that you already have a firm understanding
+JavaScript programmers. It expects you to have a firm understanding
 of JavaScript and a working knowledge of HTML/CSS.  
 The strength of this book lies in its ability to force you to
 revisit concepts most JS programmers (including myself) always take for
@@ -9,16 +9,24 @@ cross-browsers strategies, etc.
 
 Resig sets the tone pretty early on. After a short introduction in a chapter
 titled "Arming With Testing And Debugging" he tells us about the importance of
-testing and goes on to explain how we can create a very simple JavaScript
-`assert` method and its associated test runner. Considerations like this
-are usually briefly mentioned towards the end of a textbook. Not this time.
+testing and goes on to explain how one can create a simple JavaScript
+`assert` method and its associated test runner. Testing is usually briefly
+mentioned towards the end of a textbook. Not this time. Testing is mentioned
+throughout the book.
 
-Reasons I'm writing about reading "Secrets of the JavaScript Ninja":
+So why am I writing about reading "Secrets of the JavaScript Ninja"?
+Several reasons:
 
 1. Writing about something helps you remember it better
 2. I'm adding some reference and extra information here and there.
 3. Hopefully this is useful to you, the reader, to a) get a sense of what's in
    this book and b) get better at JavaScript!
+
+The remainder of this article is organized in sections, matching roughly the
+order of the book's chapters. In each of those sections I go through what
+picked my interest while reading the book. When a concept was important I tried
+to explain it with my own words. Hopefully that will help you understand why I
+thought this book is worth reading.
 
 ## Functions
 
@@ -137,7 +145,7 @@ Memoizing by using the object nature of functions:
     };
 
 You can easily guess how useful these techniques are in a library like
-jQuery (actually, probably more in Sizzle, jQuery's DOM access library).
+jQuery (actually probably more in Sizzle, jQuery's DOM access library).
 
 ### Function Overloading
 Functions have a `length` property, which corresponds to the number of
@@ -376,11 +384,11 @@ propagation at any point. Inside a handler, `e.stopPropagation()` and
 That was a lengthy explanation but I think it describes what happens fairly
 accurately. I hope that it will help you understand a few things. Namely:
 
-- `addEventListener('click', handler)` will have consistent behavior in IE and
-  modern browsers out-of-the-box (remember, IE's model only supports bubbling
-  phase). **That's why jQuery won't let you set register handlers for capturing
-  phase**. Letting you doing do wouldn't be cross-browser compatible. jQuery
-  supports bubbling in a cross browser fashion by emulating bubbling. In
+- `addEventListener('click', handler, false)` will have consistent behavior in
+  IE and modern browsers out-of-the-box (remember, IE's model only supports
+  bubbling phase). **That's why jQuery won't let you set register handlers for
+  capturing phase**. Letting you doing do wouldn't be cross-browser compatible.
+  jQuery supports bubbling in a cross browser fashion by emulating bubbling. In
   browsers that don't support it, the library manually walks the DOM tree up to
   call registered handlers. That's also how jQuery goes about supporting custom
   events (`someJqueryElem.bind('my-custom-event', handler)`).
@@ -469,4 +477,55 @@ if the event target matches this jQuery selector. If it does, your handler will
 be called. Not so magic right?
 
 ## DOM Manipulation
-Is next up for reading.
+DOM manipulations are expensive. Libraries such as jQuery do a very good job of
+thinking about performance which is why relying on an abstraction to manipulate
+the DOM makes sense (manipulating the DOM yourself would most likely result in
+your app being slow). For instance you're very unlikely to use methods such as
+`createDocumentFragment` if you're authoring a one-off DOM manipulation.
+
+The chapter describes how to implement DOM insertion. Most of it is not
+surprising. Here are the steps:
+
+- *Parse the string into a HTML string*: no surprise there, pretty much What you
+  would expect: regular expression, yadda, yadda, yadda.
+- *Create HTML nodes from the HTML string*: that step has to go around the fact
+  that certain elements have to be created within a specific element in order
+  to be inserted in the DOM successfully. For instance, `<td>` must be withing
+  a `<tr>`, which must be within a `<tbody>` which must be withing a `<table>`.
+  To go around those restrictions, the HTML string is wrapped before insertion,
+  elements are inserted in an empty div (using `innerHTML`), and used from there.
+- *Insert those nodes into the document*: straightforward, except for the fact
+  that you have to deal with inline scripts potentially contained in the
+  collection of DOM nodes you're about to insert in the page. Workaround is to
+  delete `<script>` nodes from the inserted nodes and execute them
+  individually by inserting and removing them immediately after the `<head>`
+  tag.
+
+Removing elements is tricky because you have to be careful to remove the
+associated handlers not to create memory leaks.  
+Cloning elements is difficult in IE, because IE copies not only the DOM node
+but also event handlers (heh.)  
+Chapter ends with considerations about getting text and cross-browser
+whitespace handling. Not *that* interesting.
+
+## CSS Selector Engine
+Even though modern browsers have adopted handy APIs like `querySelector` and
+`querySelectorAll`, pure JS selector engines have to be considered for
+backwards compatibility and to enforce uniform behavior across browsers.
+
+Chapter begins with a discussion on how to fix the element-rooted queries
+problem. Basically `myDiv.querySelector('div .someClass')` will act as if you
+wrote `document.querySelector('div .someClass')`. Fix is pretty nasty: rewrite
+all queries to be rooted with a temporary id. So, in our case,
+`myDiv.querySelector('div .someClass')` will be rewritten to
+`myDiv.querySelector('#mydiv div .someClass')`.
+
+A small section of the chapter looks at how to use xpath, why it's powerful and
+why it's confusing. The rest of the chapter looks at top-down vs bottom-up css
+selector engines. Not going to go into that. It's an interesting read but I
+didn't get much from it.
+
+## Conclusion?
+I wish there was a "so let's wrap up" chapter. It feels like the last 2
+chapters weren't worked on as much as the rest of the book (especially compared
+to the excellent beginning of the book).
