@@ -15,9 +15,9 @@ body { margin: 0; font-size: 1em; line-height: 1.4; }
 ::selection { background: #ab2012; color: #fff; text-shadow: none; }
 
 /* Links */
-a { color: #666; }
-a:visited { color: #666; }
-a:hover { color: #222; }
+a { color: #2445AD; }
+a:visited { color: #2445AD; }
+a:hover { color: #2445AD; }
 a:focus { outline: thin dotted; }
 a:hover, a:active { outline: 0; }
 
@@ -245,13 +245,13 @@ body {
   background: #efefef;
   color: #222;
   padding: 1em;
+  border: 1px #ccc solid;
 }
 .note-content code {
   font-size: .9em;
-  padding: 2px;
+  padding: 2px 4px;
   background: #eee;
   border-radius: 2px;
-  text-shadow: 0 -1px #fff;
 }
 .note-content blockquote {
   padding-left: 1.2em;
