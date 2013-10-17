@@ -1,7 +1,7 @@
 ## Who's This Book For?
-"Secrets of the JavaScript Ninja" is designed for intermediate to advanced
-JavaScript programmers. It expects you to have a firm understanding
-of JavaScript and a working knowledge of HTML/CSS.  
+[Secrets Of The JavaScript Ninja](http://www.manning.com/resig/) is designed
+for intermediate to advanced JavaScript programmers. It expects you to have a
+firm understanding of JavaScript and a working knowledge of HTML/CSS.  
 The strength of this book lies in its ability to force you to
 revisit concepts most JS programmers (including myself) always take for
 granted. It puts the focus on functions as objects, function invoking, closures,
@@ -25,10 +25,7 @@ Several reasons:
 The remainder of this article is organized in sections, matching roughly the
 order of the book's chapters. In each of those sections I go through what
 picked my interest while reading the book, with a focus on concepts that
-"clicked" (i.e., concepts or JS features that I was familiar with but did not
-understand well, like prototypes, events or closure). Note that I purposefully
-ignore the parts I found boring or less instructive.
-
+"clicked".
 
 ## Functions
 Created via the `Function` constructor, functions are special objects with
@@ -344,9 +341,10 @@ Have you always wonder why `(function() {})()` works the way it does? Well:
     (myFunc)();
 
 This is clever because it means the body of our IIFE is going to:
+
 - execute immediately after its declaration
 - have a reference to the outside scope through the closure it creates
-- keep all its state and variable isolated from outside of it
+- keep all its variables and inner functions isolated and hidden from outside
 
 Hence IIFEs are a nice way to create isolated scopes for independent pieces of
 functionality. It guarantees no conflict with and no leakage to the outside
@@ -368,9 +366,10 @@ Browser APIs are well known: `window.setTimeout` and `window.setInterval` to
 create timers, `window.clearTimeout` and `window.clearInterval` to clear them.
 
 Nifty trick for all browsers and IE > 9: timer functions can take arguments!
-Like so: `window.setInterval(myfunction, 100, arg1, arg2)`
+Like so:  
+`window.setInterval(myfunction, 100, arg1, arg2)`
 
-There's a difference between:
+Important note! There's a difference between:
 
     # Executes `fn` every 10ms by calling setInterval once
     window.setInterval(fn, 10);
@@ -398,7 +397,7 @@ timers.
 The idea is to have a single timer handling a queue (of tests to run or of
 animations/functions to execute) so that the browser is not overwhelmed by
 multiple timers. This centralized timer technique guarantees order of
-execution. That's a perk we don't get when we use multiple timers.
+execution. That's a perk we don't get when we use multiple native timers.
 
 ## With Statement
 There is a whole chapter about JavaScript's `with` statement. I honestly don't
@@ -467,7 +466,7 @@ The other ones are `for`, `readonly`, `maxlength`, `cellspacing`, `rowspan`,
 `colspan`, `tabindex` which match respectively to the property names `htmlFor`,
 `readOnly`, `maxLength`, `cellSpacing`, `rowSpan`, `colSpan`, `tabIndex`.)
 
-Major quirks that Resig talks about:
+Major quirks pointed out:
 
 - Form input's `id`/`name` attributes are transferred on the form DOM node as
   properties.  For instance if you have an input element with an `id`/`name`
@@ -481,18 +480,9 @@ Major quirks that Resig talks about:
   color, opacity or pixel measures. One interesting API: `getComputedStyle` (or IE's `currentStyle`) gives you the active CSS
   property/value pairs for an element.
 
-## Events
-In a big chapter about DOM events and their quirks Resig basically goes through
-the process of implementing jQuery's event system, including custom events.
-While being extremely interesting I wish Resig was more upfront about what this
-chapter is about. Another good title for it could be "Understanding jQuery's
-events system".  
-That being said I learned a lot about events while reading this chapter and it
-crystallized several important concepts.
-
-### Understanding Event Propagation
+## Understanding Event Propagation
 The order in which events are triggered throughout the DOM tree is not
-consistent across browser.
+consistent across browsers.
 
 Netscape implements event propagation "outside-in". An event propagates
 from the root of the DOM tree all the way through its target (a button on which
@@ -556,7 +546,7 @@ accurately. I hope that it will help you understand a few things. Namely:
 A good page to help you understand that if the explanation above didn't stick:
 [Quirksmode On Events](http://www.quirksmode.org/js/events_order.html)
 
-### jQuery's Event System
+## jQuery's Event System
 At its core, jQuery's event system doesn't rely much on the browser to work.
 There are so many quirks that jQuery had to came up with a solution to
 implement event binding, unbinding and triggering in a consistent manner. A few
@@ -579,14 +569,14 @@ time and programmatic triggering of registered handler.
 If you're interested in the nitty-gritty details head to [jQuery's
 source](https://github.com/jquery/jquery/blob/master/src/event.js)
 
-### Concept Of Event Delegation
+## Concept Of Event Delegation
 jQuery's `.delegate(type, selector, handler)` (or `.on(type, selector,
-handler)` in later versions) can appear really magic if you don't understand
-the basic concept of event delegation.
+handler)` in later versions) seems really magic if you don't understand
+the concept of event delegation.
 
-To put it in simple terms: event delegation is the process of registering a
-handler high up in the DOM tree to handle events happening lower. Event
-delegation is made possible by 2 things:
+To put it in simple terms: **event delegation is the process of registering a
+handler high up in the DOM tree to handle events happening at lower levels.**  
+Event delegation is made possible by 2 things:
 
 - event bubbling
 - ability to inspect event object's `target` property in handlers
@@ -630,11 +620,11 @@ be called. Not so magic right?
 DOM manipulations are expensive. Libraries such as jQuery do a very good job of
 thinking about performance which is why relying on an abstraction to manipulate
 the DOM makes sense (manipulating the DOM yourself would most likely result in
-your app being slow). For instance you're very unlikely to use methods such as
-`createDocumentFragment` if you're authoring a one-off DOM manipulation.
+your app being slow and leaking memory). For instance you're very unlikely to
+use methods such as `createDocumentFragment` if you're authoring a one-off DOM
+manipulation.
 
-The chapter describes how to implement DOM insertion. Most of it is not
-surprising. Here are the steps:
+Steps to implement DOM insertion correctly:
 
 - *Parse the string into a HTML string*: no surprise there, pretty much What you
   would expect: regular expression, yadda, yadda, yadda.
@@ -651,31 +641,15 @@ surprising. Here are the steps:
   individually by inserting and removing them immediately after the `<head>`
   tag.
 
-Removing elements is tricky because you have to be careful to remove the
+*Removing* elements is tricky because you have to be careful to remove the
 associated handlers not to create memory leaks.  
 Cloning elements is difficult in IE, because IE copies not only the DOM node
 but also event handlers (heh.)  
-Chapter ends with considerations about getting text and cross-browser
-whitespace handling. Not *that* interesting.
-
-## CSS Selector Engine
-Even though modern browsers have adopted handy APIs like `querySelector` and
-`querySelectorAll`, pure JS selector engines have to be considered for
-backwards compatibility and to enforce uniform behavior across browsers.
-
-Chapter begins with a discussion on how to fix the element-rooted queries
-problem. Basically `myDiv.querySelector('div .someClass')` will act as if you
-wrote `document.querySelector('div .someClass')`. Fix is pretty nasty: rewrite
-all queries to be rooted with a temporary id. So, in our case,
-`myDiv.querySelector('div .someClass')` will be rewritten to
-`myDiv.querySelector('#mydiv div .someClass')`.
-
-A small section of the chapter looks at how to use xpath, why it's powerful and
-why it's confusing. The rest of the chapter looks at top-down vs bottom-up css
-selector engines. Not going to go into that. It's an interesting read but I
-didn't get much from it.
 
 ## Conclusion?
 I wish there was a "so let's wrap up" chapter. It feels like the last 2
 chapters weren't worked on as much as the rest of the book (especially compared
 to the excellent beginning of the book).
+
+If you found this article useful I highly recommend the full book,
+[Secrets Of The JavaScript Ninja](http://www.manning.com/resig/).
