@@ -24,12 +24,13 @@ Several reasons:
 
 The remainder of this article is organized in sections, matching roughly the
 order of the book's chapters. In each of those sections I go through what
-picked my interest while reading the book. When a concept was important I tried
-to explain it with my own words. Hopefully that will help you understand why I
-thought this book is worth reading.
+picked my interest while reading the book, with a focus on concepts that
+"clicked" (i.e., concepts or JS features that I was familiar with but did not
+understand well, like prototypes, events or closure). Note that I purposefully
+ignore the parts I found boring or less instructive.
+
 
 ## Functions
-
 Created via the `Function` constructor, functions are special objects with
 one superpower: they can be **invoked**. Besides that, functions are object and
 nothing but objects:
@@ -71,7 +72,7 @@ How can you get around that?
     Array.prototype.slice.call
     etc
 
-#### Invoking a function, and `this`
+#### Invoking a Function, and `this`
 `this` is defined as the **function context**. Available within a function body,
 `this` should really be referred to as  **invocation context**, because its value
 varies based on the way a function is invoked:
@@ -182,7 +183,7 @@ itself does.**
 
 Let's look at some code samples to go over the main use cases for closures.
 
-### Private variables
+### Private Variables
     function Counter() {
         var count = 0; // visibility limited to Counter's inner scope
         this.increment = function() { count++; }
@@ -190,20 +191,169 @@ Let's look at some code samples to go over the main use cases for closures.
     };
     // Can't view/modify count from here. You have to go through Counter.getCount()
 
-### Callbacks and timers
-TODO
+### Callbacks And Timers
+Callback and timers are in the same vain because the idea here is to use a
+closure to host values that the function scheduled to be called back is going
+to need when executing. Understanding that a closure's environment (function,
+variables) stays around even when the outer scope has finished its execution is
+fundamental.
 
-### Binding function contexts
-TODO
+    /**
+     * Callback
+     */
+    var elem = document.getElementById('my-elem');
+    $.ajax({
+        url: '/my-endpoint',
+        success: function() {
+            // Here we have access to elem because our outer anonymous
+            // function had access to it when it was declared.
+            elem.innerHTML('callback executed successfully');
+        }
+    });
 
-### Partially applying functions (Currying)
-TODO
+    /**
+     * Timer
+     */
+     function count() {
+        var count = 0;
+        setInterval(function() {
+            // Here we have access to count for the same reason: our outer
+            // anonymous function has access to it when it is declared.
+            console.log('Count is ' + count);
+            count++;
+        }, 1000);
+     };
 
-### Function wrapping
-TODO
 
-### Immediate functions
-TODO
+### Binding Function Contexts
+Here closures are used to set the context of functions properly.
+
+    // Simple example
+    function bind(context, name) {
+        return function() {
+            // Access to context and name via closure
+            return context[name].apply(context, arguments);
+        };
+    };
+
+    // Example from PrototypeJS
+    Function.prototype.bind = function() {
+        var fn = this;
+        // Turn arguments into a real array
+        var args = Array.prototype.slice.call(arguments);
+        var ctx = args.shift(); // args is now args[1:n] and object refers
+                                // to the first argument
+        return function() {
+            return fn.apply(
+                ctx,
+                // `args` refers to the arguments specified at "bind-time"
+                // and `arguments` refers to the arguments specified at
+                // "call-time".
+                // This lets us specify "default" arguments and bind function
+                // context at the same time.
+                args.concat(Array.prototype.slice.call(arguments))
+            );
+        };
+    };
+
+    // Sample usage
+    var nameSpace = { a: 1, plop: function(b, c) { return this.a + b + c; } }
+    var basicBound = basicBind(nameSpace, "plop");
+    var bound = nameSpace.plop.bind(nameSpace, 2);
+    basicBound(3, 5) // returns 9 (1 + 3 + 5)
+    bound(3); // returns 6 (1 + 2 + 3)
+
+
+### Partial Function Application, Currying
+Currying and partials are super simple if you understand `bind`'s definition
+above. It's essentially the same trick.
+
+    Function.prototype.curry = function() {
+        var fn = this;
+        var args = Array.prototype.slice.call(arguments); // "curry-time" args
+
+        return function() {
+            return fn.apply(
+                // unmodified context
+                this,
+                // concatenation of "curry-time" and "call-time" args, in this order
+                args.concat(Array.prototype.slice.call(arguments))
+            );
+        };
+    };
+
+    Function.prototype.partial = function() {
+        var fn = this;
+        var args = Array.prototype.slice.call(arguments);
+
+        return function() {
+            // Here the args manipulation is a bit more tricky since you can
+            // leave an undefined param for partial application later on.
+            // (see sample usage)
+            var arg = 0;
+            for (var i=0; i < args.length && arg < arguments.length; i++) {
+                if (args[i] === undefined) {
+                    args[i] = arguments[arg];
+                    arg++;
+                }
+            }
+            return fn.apply(this, args);
+        };
+    };
+
+    // Sample usage
+    var myFunction = function(a, b, c) { return a + b + c; };
+    var curried = myFunction.curry(1, 2);
+    var partial = myFunction.partial(undefined, 2);
+    curried(3); // 6
+    partial(1, 4); // 7
+
+### Function Wrapping
+    function wrap(object, method, wrapper) {
+        // Keeps a reference to the original method
+        var fn = object[method];
+
+        return object[method] = function() {
+            // The wrapper is called with
+            // - the original function to be wrapped, as a first argument
+            // - the list of arguments to call the original function with
+            return wrapper.apply(this, [fn.bind(this)].concat(
+                Array.prototype.slice.call(arguments)));
+        };
+    };
+
+    // Sample usage: automatically adds try/catch on event listeners
+    wrap(HTMLElement.prototype, "addEventListener", function(old, type, handler, prop) {
+        old(type, function() {
+            try {
+                handler.apply(this, arguments);
+            } catch(e) {
+                // Handle error
+            }
+        }, prop);
+    };
+
+### Immediate Functions
+Closures are also crucial in IIFEs (*Immediately Invoked Function Expression*).
+Have you always wonder why `(function() {})()` works the way it does? Well:
+
+    // an IIFE like...
+    (function() {/* body */})()
+    // ...is EXACTLY the same as...
+    var myFunc = function() {/* body */};
+    (myFunc)();
+
+This is clever because it means the body of our IIFE is going to:
+- execute immediately after its declaration
+- have a reference to the outside scope through the closure it creates
+- keep all its state and variable isolated from outside of it
+
+Hence IIFEs are a nice way to create isolated scopes for independent pieces of
+functionality. It guarantees no conflict with and no leakage to the outside
+world. That's why most libraries, including jQuery, are wrapped in a IIFE.
+
+Note that you can pass params to an IIFE:  
+`(function(a, b) {return a + b;})(1, 2)`
 
 ## Prototypes
 TODO
