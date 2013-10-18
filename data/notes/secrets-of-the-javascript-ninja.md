@@ -1,4 +1,4 @@
-## Who's This Book For?
+## What Is This Book? Who Is It For?
 [Secrets Of The JavaScript Ninja](http://www.manning.com/resig/) is designed
 for intermediate to advanced JavaScript programmers. It expects you to have a
 firm understanding of JavaScript and a working knowledge of HTML/CSS.  
@@ -25,7 +25,7 @@ Several reasons:
 The remainder of this article is organized in sections, matching roughly the
 order of the book's chapters. In each of those sections I go through what
 picked my interest while reading the book, with a focus on concepts that
-"clicked".
+"clicked" and interesting discoveries.
 
 ## Functions
 Created via the `Function` constructor, functions are special objects with
@@ -33,10 +33,10 @@ one superpower: they can be **invoked**. Besides that, functions are object and
 nothing but objects:
 
 - they're created via literals `function <optionalName> (<optionalArguments) {<functionBody>}`
-- can be assigned to variables or properties
-- can be passed as function parameters and returned as function results
-- can have properties and method (for instance, each function has a `name`
-  property and a `call` and `apply` method)
+- they can be assigned to variables or properties
+- they can be passed as function parameters and returned as function results
+- they can have properties and methods. For instance each function has a `name`
+  property and a `call` and `apply` method. More on that later.
 
 ### Function Declaration
 Two main ways to declare a function:
@@ -169,14 +169,17 @@ arguments declared in their signature. By comparing `fn.length` and
 
 ## Closures
 Closures are probably one of the most confusing concepts when someone with a
-classical object-oriented background comes to JavaScript. Resig's definition of
-it: **closures allow a function to access all the variables, as well as other
-functions, that are in scope when the function itself is declared.**  
-Later in the chapter: **That's what closures are all about. They create a
-"safety bubble," if you will, of the function and the variables that are in
-scope at the point of the function's declaration [...] This "bubble,"
+classical object-oriented background comes to JavaScript.
+
+Resig's definition of it: *"closures allow a function to access all the
+variables, as well as other functions, that are in scope when the function
+itself is declared."*
+
+Later in the chapter: *"That's what closures are all about. They create a
+'safety bubble,' if you will, of the function and the variables that are in
+scope at the point of the function's declaration [...] This 'bubble,'
 containing the function and its variables, stays around as long as the function
-itself does.**
+itself does."*
 
 Let's look at some code samples to go over the main use cases for closures.
 
@@ -354,7 +357,144 @@ Note that you can pass params to an IIFE:
 `(function(a, b) {return a + b;})(1, 2)`
 
 ## Prototypes
-TODO
+JavaScript Prototypes represent a hard-to-grasp concept because most of us
+think about it with the classical object oriented background in the back of our
+minds.
+
+In a few sentences Resig made me realize how wrong I've been thinking
+about prototypes: *"prototypes are a convenient way to define types of objets,
+but they're actually a feature of functions"*.
+
+And later: "*each object in JavaScript has an implicit property named
+`constructor` that references the constructor [function] that was used to
+create the object. And because the prototype is a property of the constructor
+[function], each object has a way to find its prototype.*"  
+Note that I appended *[function]* to make you realize that constructors are not
+a special feature of the language. In fact, **a "constructor" is just a
+function invoked in a given way** (using `new`).
+
+Remember what we discussed before:
+
+- functions are just objects with the privilege of being **invoked**
+- invoking a function with `new` will call it with a context set to an empty
+  object. That object will be returned when the function is done executing.
+
+References in objects are resolved on the object itself first. However when a
+property fails to be found on the object itself, a property lookup is made **on
+the object contructor's `prototype` property**. And you guessed already: if an
+object constructor's `prototype` references an object, lookup can be performed
+on that object constructor's `prototype`. And so on and so forth. That's what
+**prototype chain lookup** means.
+
+Take the following snippet:
+
+    /* 1 */ function A() { this.foo = 'bar'; }
+    /* 2 */ var a = new A();
+    /* 3 */ A.prototype.baz = 'blah';
+
+    console.log(a.baz); // logs 'blah'
+
+What happens in this snippet? A lot!
+
+- a function `A` is defined on line 1
+- `A` is invoked with `new` on line 2. That means `A` is called with an
+  empty object (let's call it `o`) as its context
+- `o` is given a `foo` property with a value `'bar'` (we wrote that ourselves)
+- `o` is given a `constructor` property. The value is a reference to
+  function `A` (that's automatically handled for us)
+- `o` is returned (automatically handled for us) and referenced through a variable `a`
+- on line 3 we define a `baz` property on `A`'s `prototype` property
+- on line 4 here are the steps to access `baz` property via `a.baz`:
+  - `a` points to an anonymous object `o`, which does not have a `baz` property
+  - `o` has a `constructor` property which points to `A`
+  - `A` has a `prototype` property which points to an anonymous object `o2`
+  - `o2` has a `baz` property which points to the string `'blah'`
+
+### Type Introspection
+There are 3 ways to instrospect into an object's "type":
+
+- `typeof object === typeStr`. Limitation: `typeStr` is limited to strings
+  representing built-in types like `'function'`, `'object'`, `'number'`,
+  `'string'`, etc
+- `object instanceof ConstructorFunction`. Limitation: you need a reference to
+  `ConstructorFunction` and it's not guaranteed that `ConstructorFunction`
+  was used to instantiate `object`. It could be higher up in the prototype
+  chain.
+- `object.constructor === ConstructorFunction`. That's the most robust way to
+  check where an object comes from. This necessitates a reference to
+  `ConstructorFunction`.
+
+### Achieving Inheritance With Prototypes
+Achieving inheritance in JavaScript is as simple as using the prototype chain
+lookup to our advantage so that "inherited" properties will be resolved
+correctly, thus extending an object's capabilities.
+
+    function B() {
+        this.dataB = function() {...};
+    };
+    B.prototype.functionB = function() {...};
+
+    function A() {
+        this.functionA = function() {...};
+    };
+    A.prototype = new B();
+
+    var a = new A();
+
+    a.functionA(); // ok
+    a.functionB(); // ok!
+    a instanceof A; // ok
+    a instanceof B; // ok!
+
+Let's go through what happens when we call `a.functionB()`:
+
+- `a` refers to an object (returned from `new A()`)
+- that object doesn't have a `functionB` property
+- that object does have a `constructor` property, pointing to `A`
+- `A` has a `prototype` property, pointing to an object (returned from `new B()`)
+- that object does not have a `functionB` property
+- that object does have a `constructor` property, pointing to `B`
+- `B` has a `prototype` property, pointing to an object
+- that object has a `functionB` property. BINGO!
+
+Here's the complete reference chain:  
+`a`->`(new A())`->`constructor`->`A`->`prototype`  
+->`(new B())`->`constructor`->`B`->`prototype`->`functionB`
+
+### Gotchas And Tricks
+Prototypes come with lots of bold warnings, the first of which is: be extra
+careful when modifying/extending native objects' prototypes!  
+There is only one `Array.prototype` for a whole page. Be aware that modifying
+it is similar to modifying a global variable. Actually it's probably worse
+because a lot of places are using `Array.prototype` in non-explicit ways.
+
+In most browsers you can access native DOM element prototype and play with it:
+
+    HTMLElement.prototype.addEventListener = function(type, fn, useProp) {
+        console.log('trooooooll!'); // don't do that, seriously!
+    };
+
+Second gotcha: use `hasOwnProperty` to loop through object's properties.  
+Otherwise you'll loop through non-instance properties:
+
+    Object.prototype.foo = 42;
+    var obj = {a: 1, b: 2};
+
+    for (var i in obj) { console.log(i); } 
+    //-> logs 'a', 'b' *and 'foo'*
+
+    for (var i in obj) { if (obj.hasOwnProperty(i)) { console.log(i); } }
+    //-> logs 'a' and 'b'
+
+
+Trick to ensure a function is always invoked as a constructor:
+
+    function A() {
+        if (!(this instanceof arguments.callee)) {
+            return new A();
+        }
+        this.foo = 'bar';
+    };
 
 ## Timers
 JavaScript is _single-threaded_. That's really important to understand. Once
@@ -398,24 +538,6 @@ The idea is to have a single timer handling a queue (of tests to run or of
 animations/functions to execute) so that the browser is not overwhelmed by
 multiple timers. This centralized timer technique guarantees order of
 execution. That's a perk we don't get when we use multiple native timers.
-
-## With Statement
-There is a whole chapter about JavaScript's `with` statement. I honestly don't
-think it deserved a whole chapter in this book.
-
-There are two pieces of information I got from it.  
-First one is that `with` is going away in ES5 strict mode. It's considered
-harmful mainly because you can read from and write to the global scope
-inadvertently.  
-Second thing is that Firebug (and probably other devtools too) uses `with` in a
-beautiful fashion to create the web console's execution context ♥
-
-    eval("with(__scope__.vars) {" +
-        "with(__scope__.api) {" + 
-            "with(__scope__.userVars) {" +
-                "with(window) {" +
-                    someUserCode +
-                "}}}}");
 
 ## Cross Browser Strategies
 Authoring cross-browser JavaScript is hard. Resig names 5 major concerns:
@@ -476,8 +598,9 @@ Major quirks pointed out:
 - `href`, `src` or `action` perform URL normalization (you get a full canonical
   URL when you might expect a relative URL)
 - input `type` attribute can't be changed after DOM node is inserted (IE only)
-- more problems around the `style` attribute: measuring width/height, getting
-  color, opacity or pixel measures. One interesting API: `getComputedStyle` (or IE's `currentStyle`) gives you the active CSS
+- more problems around the `style` attribute: measuring `width` and `height`,
+  getting color, opacity or pixel measures. One interesting API:
+  `getComputedStyle` (or IE's `currentStyle`). It gives you the active CSS
   property/value pairs for an element.
 
 ## Understanding Event Propagation
@@ -547,10 +670,10 @@ A good page to help you understand that if the explanation above didn't stick:
 [Quirksmode On Events](http://www.quirksmode.org/js/events_order.html)
 
 ## jQuery's Event System
-At its core, jQuery's event system doesn't rely much on the browser to work.
+At its core jQuery's event system doesn't rely much on the browser to work.
 There are so many quirks that jQuery had to came up with a solution to
-implement event binding, unbinding and triggering in a consistent manner. A few
-key things:
+implement event binding, unbinding and triggering in a consistent manner.  
+Key ideas:
 
 - the only handler actually registered by jQuery is a dispatcher. There is one
   dispatcher per event type.
@@ -613,8 +736,8 @@ The delegated version above has several advantages:
 
 Of course jQuery is more sophisticated and lets you delegate your handler on a
 container by specifying a *jQuery selector*. Under the hoods jQuery will check
-if the event target matches this jQuery selector. If it does, your handler will
-be called. Not so magic right?
+if the event target matches this jQuery selector. If it does your handler will
+be called.
 
 ## DOM Manipulation
 DOM manipulations are expensive. Libraries such as jQuery do a very good job of
@@ -643,13 +766,13 @@ Steps to implement DOM insertion correctly:
 
 *Removing* elements is tricky because you have to be careful to remove the
 associated handlers not to create memory leaks.  
-Cloning elements is difficult in IE, because IE copies not only the DOM node
+Cloning elements is difficult in IE because IE copies not only the DOM node
 but also event handlers (heh.)  
 
 ## Conclusion?
-I wish there was a "so let's wrap up" chapter. It feels like the last 2
-chapters weren't worked on as much as the rest of the book (especially compared
-to the excellent beginning of the book).
-
 If you found this article useful I highly recommend the full book,
-[Secrets Of The JavaScript Ninja](http://www.manning.com/resig/).
+[Secrets Of The JavaScript Ninja](http://www.manning.com/resig/). I personally
+found the book super useful and illuminating in a lot of ways.
+
+It's good to be able to read about "real-world" JavaScript, including about
+browser quirks, language pitfalls and testing.
