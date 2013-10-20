@@ -41,10 +41,12 @@ nothing but objects:
 ### Function Declaration
 Two main ways to declare a function:
 
+<pre class="brush: js">
     // option 1
     function blah() { console.log('called'); }
     // option 2
     var blah = function() { console.log('called'); };
+</pre>
 
 In both cases the function can be called via `blah()` after its declaration.
 However there's a crucial difference: in the first case the function is
@@ -65,9 +67,11 @@ array-like accessors (`arguments[i]`) and properties (`arguments.length`) but
 **is not an array** (`arguments.slice(1)` fails for instance).  
 How can you get around that?
 
+<pre class="brush: js;">
     Object.prototype.toString.call
     Array.prototype.slice.call
-    etc
+    //...etc
+</pre>
 
 #### Invoking a Function, and `this`
 `this` is defined as the **function context**. Available within a function body,
@@ -85,6 +89,7 @@ Resig enumerates four ways.
 
 First option: through a named function. Nothing out of the ordinary.
 
+<pre class="brush: js; highlight: [1,3]">
     function fact(x) {
         if (x !== 1) {
             return x * fact(x - 1);
@@ -92,11 +97,13 @@ First option: through a named function. Nothing out of the ordinary.
             return 1;
         }
     };
+</pre>
 
 Second option: through a method name. Note the danger: if we decide to change
 that method's name to `newfact`, we'll have to remember to change the inner
 reference to `this.newfact`.
 
+<pre class="brush: js; highlight: [2,4]">
     var math = {
         'fact': function (x) {
             if (x !== 1) {
@@ -106,10 +113,12 @@ reference to `this.newfact`.
             }
         }
     };
+</pre>
 
 Third option: through inline name. This addresses the shortcoming of the
 previous solution.
 
+<pre class="brush: js; highlight: [2,4]">
     var math = {
         'fact': function myfact(x) {
             if (x !== 1) {
@@ -119,9 +128,11 @@ previous solution.
             }
         }
     };
+</pre>
 
 Last option: `callee` (going to go away in later versions of JS, use sparingly).
 
+<pre class="brush: js; highlight: [2,4]">
     var math = {
         'fact': function (x) {
             if (x !== 1) {
@@ -131,16 +142,19 @@ Last option: `callee` (going to go away in later versions of JS, use sparingly).
             }
         }
     };
+</pre>
 
 ### Auto-Memoizing Functions
 Memoizing by using the object nature of functions:
 
+<pre class="brush: js">
     function getElements(name) {
         if (!getElements.cache) { getElements.cache = {}; }
         return getElements.cache[name] =
             getElements.cache[name] ||
             document.getElementsByTagName(name);
     };
+</pre>
 
 You can easily guess how useful these techniques are in a library like
 jQuery (actually probably more in Sizzle, jQuery's DOM access library).
@@ -150,6 +164,7 @@ Functions have a `length` property, which corresponds to the number of
 arguments declared in their signature. By comparing `fn.length` and
 `arguments.length`, function overloading can be implemented in a cool way:
 
+<pre class="brush: js">
     function addMethod(object, name, fn) {
         var old = object[name];
         object[name] = function() {
@@ -166,6 +181,7 @@ arguments declared in their signature. By comparing `fn.length` and
     addMethod(obj, 'method', function() { /* do something */ });
     addMethod(obj, 'method', function(a) { /* do something with a */ });
     addMethod(obj, 'method', function(a, b) { /* do something with a and b */ });
+</pre>
 
 ## Closures
 Closures are probably one of the most confusing concepts when someone with a
@@ -184,12 +200,14 @@ itself does."*
 Let's look at some code samples to go over the main use cases for closures.
 
 ### Private Variables
+<pre class="brush: js">
     function Counter() {
         var count = 0; // visibility limited to Counter's inner scope
         this.increment = function() { count++; }
         this.getCount = function() { return count; }
     };
     // Can't view/modify count from here. You have to go through Counter.getCount()
+</pre>
 
 ### Callbacks And Timers
 Callback and timers are in the same vain because the idea here is to use a
@@ -198,6 +216,7 @@ to need when executing. Understanding that a closure's environment (function,
 variables) stays around even when the outer scope has finished its execution is
 fundamental.
 
+<pre class="brush: js">
     /**
      * Callback
      */
@@ -223,11 +242,13 @@ fundamental.
             count++;
         }, 1000);
      };
+</pre>
 
 
 ### Binding Function Contexts
 Here closures are used to set the context of functions properly.
 
+<pre class="brush: js">
     // Simple example
     function bind(context, name) {
         return function() {
@@ -262,12 +283,14 @@ Here closures are used to set the context of functions properly.
     var bound = nameSpace.plop.bind(nameSpace, 2);
     basicBound(3, 5) // returns 9 (1 + 3 + 5)
     bound(3); // returns 6 (1 + 2 + 3)
+</pre>
 
 
 ### Partial Function Application, Currying
 Currying and partials are super simple if you understand `bind`'s definition
 above. It's essentially the same trick.
 
+<pre class="brush: js">
     Function.prototype.curry = function() {
         var fn = this;
         var args = Array.prototype.slice.call(arguments); // "curry-time" args
@@ -307,8 +330,10 @@ above. It's essentially the same trick.
     var partial = myFunction.partial(undefined, 2);
     curried(3); // 6
     partial(1, 4); // 7
+</pre>
 
 ### Function Wrapping
+<pre class="brush: js">
     function wrap(object, method, wrapper) {
         // Keeps a reference to the original method
         var fn = object[method];
@@ -332,16 +357,19 @@ above. It's essentially the same trick.
             }
         }, prop);
     };
+</pre>
 
 ### Immediate Functions
 Closures are also crucial in IIFEs (*Immediately Invoked Function Expression*).
 Have you always wonder why `(function() {})()` works the way it does? Well:
 
+<pre class="brush: js">
     // an IIFE like...
     (function() {/* body */})()
     // ...is EXACTLY the same as...
     var myFunc = function() {/* body */};
     (myFunc)();
+</pre>
 
 This is clever because it means the body of our IIFE is going to:
 
@@ -388,11 +416,13 @@ on that object constructor's `prototype`. And so on and so forth. That's what
 
 Take the following snippet:
 
-    /* 1 */ function A() { this.foo = 'bar'; }
-    /* 2 */ var a = new A();
-    /* 3 */ A.prototype.baz = 'blah';
+<pre class="brush: js">
+    function A() { this.foo = 'bar'; }
+    var a = new A();
+    A.prototype.baz = 'blah';
 
     console.log(a.baz); // logs 'blah'
+</pre>
 
 What happens in this snippet? A lot!
 
@@ -429,6 +459,7 @@ Achieving inheritance in JavaScript is as simple as using the prototype chain
 lookup to our advantage so that "inherited" properties will be resolved
 correctly, thus extending an object's capabilities.
 
+<pre class="brush: js">
     function B() {
         this.dataB = function() {...};
     };
@@ -445,6 +476,7 @@ correctly, thus extending an object's capabilities.
     a.functionB(); // ok!
     a instanceof A; // ok
     a instanceof B; // ok!
+</pre>
 
 Let's go through what happens when we call `a.functionB()`:
 
@@ -470,13 +502,16 @@ because a lot of places are using `Array.prototype` in non-explicit ways.
 
 In most browsers you can access native DOM element prototype and play with it:
 
+<pre class="brush: js">
     HTMLElement.prototype.addEventListener = function(type, fn, useProp) {
         console.log('trooooooll!'); // don't do that, seriously!
     };
+</pre>
 
 Second gotcha: use `hasOwnProperty` to loop through object's properties.  
 Otherwise you'll loop through non-instance properties:
 
+<pre class="brush: js">
     Object.prototype.foo = 42;
     var obj = {a: 1, b: 2};
 
@@ -485,16 +520,19 @@ Otherwise you'll loop through non-instance properties:
 
     for (var i in obj) { if (obj.hasOwnProperty(i)) { console.log(i); } }
     //-> logs 'a' and 'b'
+</pre>
 
 
 Trick to ensure a function is always invoked as a constructor:
 
+<pre class="brush: js">
     function A() {
         if (!(this instanceof arguments.callee)) {
             return new A();
         }
         this.foo = 'bar';
     };
+</pre>
 
 ## Timers
 JavaScript is _single-threaded_. That's really important to understand. Once
@@ -511,15 +549,19 @@ Like so:
 
 Important note! There's a difference between:
 
+<pre class="brush: js">
     # Executes `fn` every 10ms by calling setInterval once
     window.setInterval(fn, 10);
+</pre>
 
 and:
 
+<pre class="brush: js">
     # Executes `fn` every 10ms by calling setTimeout over and over
     window.setTimeout(function fn() {
         window.setTimeout(fn, 10)
     }, 10);
+</pre>
 
 Second version is guaranteed to run every 10ms or more.  
 First version will try to execute every 10ms regardless of what happened before.
@@ -707,6 +749,7 @@ Event delegation is made possible by 2 things:
 Concretely, instead of just doing some work, a delegated handler will **check
 the target first** and **then** do some work:
 
+<pre class="brush: js">
     var doWork = function() { console.log('did some work'); }
     var button = document.findElementsByClassName('a-button')[0];
 
@@ -719,6 +762,7 @@ the target first** and **then** do some work:
             doWork();
         }
     }, false); // use bubbling too
+</pre>
 
 The delegated version above has several advantages:
 

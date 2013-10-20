@@ -10,7 +10,7 @@ var marked = require('marked');
 marked.setOptions({
   gfm: true,
   pedantic: false,
-  sanitize: true
+  sanitize: false
 });
 
 // Fs, required to open files with node.
