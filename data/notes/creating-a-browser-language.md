@@ -32,6 +32,7 @@ the hard route and install everything from source in my homedir, following
 instructions from the [LLVM getting started
 page](http://llvm.org/docs/GettingStarted.html)
 
+<pre class="brush:plain">
     cd ~/bin/
     mkdir llvm
     cd llvm/
@@ -46,9 +47,11 @@ page](http://llvm.org/docs/GettingStarted.html)
     cd build/
     ../llvm/configure --prefix=/Users/abrousse/bin/llvm
     make -j10
+</pre>
 
 The listing above generated lots of output, consumed lots of my CPU, and ended with an error:
 
+<pre class="brush:plain">
     /Users/abrousse/bin/llvm/llvm/projects/compiler-rt/lib/asan/asan_malloc_mac.cc:19:10: fatal error: 'CoreFoundation/CFBase.h' file not found
     #include <CoreFoundation/CFBase.h>
              ^
@@ -67,6 +70,7 @@ The listing above generated lots of output, consumed lots of my CPU, and ended w
     make[2]: *** [all] Error 1
     make[1]: *** [clang/.makeall] Error 2
     make: *** [all] Error 1
+</pre>
 
 So, fuckit. Another dead end. I'm suspecting all revisions from clang, llvm and
 other projects aren't tested together that often. I think something to try next
@@ -77,8 +81,9 @@ nuts.
 ### On Ubuntu
 Solution for me was to install things from a Ubuntu VM. Package management is
 saner, and installing llvm is a piece of cake:
-
+<pre class="brush:plain">
     sudo apt-get install llvm
+</pre>
 
 All done! Just check that the output of `llvm --version` gives you 3.0 and
 you're good to go.

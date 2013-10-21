@@ -20,6 +20,7 @@ I wanted to cover the whole city. In other words, I wanted an evenly
 distributed cloud of points within SF. To get the coordinates of the ~100,000
 points I needed, I wrote a quick Python script:
 
+<pre class="brush: python">
     ### SF City in a box?
     # 37.811038,-122.477778 <= Northernmost point, Golden Gate Bridge
     # 37.778669,-122.514428 <= Easternmost point, Cliff House near Ocean Beach
@@ -28,46 +29,49 @@ points I needed, I wrote a quick Python script:
     from __future__ import division
 
     =====================
-    
+
     >>> max_lat = 37.811038
     >>> min_lat = 37.704739
     >>> min_lng = -122.514428
     >>> max_lng = -122.357017
-    
+
     =====================
-    
+
     >>> lat_step = (max_lat - min_lat) / 300
     0.0003543300000000234
     >>> lng_step = (max_lng - min_lng) / 300
     0.0005247033333333206
-    
+
     =====================
-    
+
     >>> lat_list = [min_lat + i*lat_step for i in range(301)]
     >>> lng_list = [min_lng + i*lng_step for i in range(301)]
     >>> lat_lng_pts = [(lat,lng) for lat in lat_list for lng in lng_list]
-    
+
     >>> len(lat_lng_pts)
     90601
-
+</pre>
 
 `lat_lng_pts` is the list of (latitude, longitude) we're interested in. Next step: retrieve the altitude for every points we got. That's where the USGS dataset comes in handy. The USGS API supports simple GETs. For instance: 
-    
+
+<pre class="brush: plain">
     GET /xmlwebservices2/elevation_service.asmx/getElevation?X_Value=lng&Y_Value=lat&Elevation_Units=METERS&Source_Layer=NED.CONUS_NED_13W&Elevation_Only=TRUE HTTP/1.1
     Host: gisdata.usgs.net
-    
+
     HTTP/1.1 200 OK
     Content-Type: text/xml; charset=utf-8
     Content-Length: length
 
     <?xml version="1.0"?>
     <double>56.2435</double>
+</pre>
 
 Now, "METERS" could be "FEET", but I prefer the metric system so here you go.
-The weird "NED.CONUS_NED_13W" param corresponds to the Western part of the US (see [this table](http://gisdata.usgs.net/XMLWebServices2/Elevation_Service_Methods.php "USGS Documentation") for more possible params). And the Elevation_only param tells that we care about the elevation only. The response will be a simple number, wrapped in XML.
+The weird "NED.CONUS_NED_13W" param corresponds to the Western part of the US (see [this table](http://gisdata.usgs.net/XMLWebServices2/Elevation_Service_Methods.php "USGS Documentation") for more possible params). And the `Elevation_only` param tells that we care about the elevation only. The response will be a simple number, wrapped in XML.
 
 Now, back to our Python shell: 
 
+<pre class="brush: python">
     >>> import urllib2, sys
     >>> def scrape(lat_lng_pts, filename):
     >>>   f = open(filename, "a")
@@ -86,7 +90,7 @@ Now, back to our Python shell:
     .
     .
     .
-
+</pre>
 
 Once I created the CSV, I imported it into a brand [new Google Fusion Table](https://www.google.com/fusiontables/DataSource?snapid=S556615xSvg).
 
@@ -162,6 +166,7 @@ via Google's Elevation API.
 
 Static street crossing declaration looks like:
 
+<pre class="brush: js">
     var streetCrossings = {
       "Lyon St": ["Bay St", "Francisco St", "Chestnut St", "Lombard St", "Greenwich St", "Filbert St", "Union St", "Green St"], 
       "Lyon St.": [
@@ -171,25 +176,27 @@ Static street crossing declaration looks like:
       "Lyon St...": ["Oak St", "Page St", "Haight St"], 
       ...etc...
     }
+</pre>
 
 Then I wrote the batch to geocode crossings and retrieve their elevation in JS.
 It looks like this:
 
+<pre class="brush: js">
       // Geocode the address, and create a new marker and InfoWindow at the geocoded location
       function geocodeCrossing(streetY, streetX) {
         var address = streetY + ' and ' + streetX + ', San Francisco, CA';
             lat=null, lng=null;
-        
+
         console.log('Now geocoding: ' + address);
 
         geocoder.geocode( { 'address': address }, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK && results[0]) {
             console.log('Latitude: ' + results[0].geometry.location.lat());
             console.log('Longitude: ' + results[0].geometry.location.lng());
-            
+
             lat = results[0].geometry.location.lat();
             lng = results[0].geometry.location.lng();
-            
+
             // Now, retrieve the elevation
             elevationRequest = {'locations': [results[0].geometry.location]}
             elevator.getElevationForLocations(elevationRequest, function(results, status) {
@@ -201,13 +208,13 @@ It looks like this:
                 alert("Elevation service failure: " + status);
               }
             });
-            
+
           } else {
             console.log("Something went wrong when trying to geocode " + streetX + ',' + streetY+ ': ' + status);
           }
         });
       };
-
+</pre>
 
 Here's the client-side batch, running for real:
 ![Geocoder in action](/img/content/street-geocoding.png)
@@ -219,6 +226,7 @@ http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-a
 
 Code to compute color for a given path:
 
+<pre class="brush: js">
       var computeHexColor = function(start, end) {
         // Given two points, compute the color of the path
         // Red means super steep, green means flat
@@ -243,6 +251,7 @@ Code to compute color for a given path:
 
         return hexColor;
       };
+</pre>
 
 ## Result
 After some amount of data cleaning (Google's geocoder is sometimes not

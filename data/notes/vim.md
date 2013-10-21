@@ -2,11 +2,8 @@ Here are some nice tips and tricks I learned while practicing VIM at work or at
 home.
 
 ## Setting VIM's syntax highlighter to a particular language
-The answer is a single command: `setf`
-
-    setf markdown
-    setf javascript
-    etc
+The answer is a single command: `setf`  
+(`setf markdown`, `setf javascript`, etc)
 
 ## Look up docs about a function, a command, anything
 When your cursor is on a word, press shift+K.
