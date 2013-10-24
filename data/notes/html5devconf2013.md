@@ -161,6 +161,7 @@ modern browsers still exists but they're rare.
 This talk is about scrolling strategies: snap-in scrolling, inertia scrolling.
 
 Solutions:
+
 - view more
 - snap-in (not ideal for vertical scrolling)
 
@@ -304,7 +305,7 @@ Top 5 questions:
 - what is a closure? why is it useful?
 - what is event delegation? Bubbling?
 - what is the box model
-- how can you seep up page load?
+- how can you speed up page load?
 - what are some values for the css position property? how do they work?
 
 More like this: https://github.com/darcyclarke/Front-end-Developer-Interview-Questions
@@ -319,6 +320,7 @@ More like this: https://github.com/darcyclarke/Front-end-Developer-Interview-Que
 ### Soft skills
 http://www.interviewcake.com/tips-and-tricks
 
+[Slides for this talk](https://docs.google.com/a/yelp.com/presentation/d/1PB7gOwRVr1Xiw9jS01bya9oDzdXe5tE7JpWk1KaZjmM/)
 
 ## Immersive Interaction Experiences: Pointer Events, Panning & Zooming, and Gestures<br>★★★★★
 **Jacob Rossi, Microsoft**
