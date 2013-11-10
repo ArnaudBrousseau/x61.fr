@@ -171,38 +171,26 @@ body {
 }
 
 .content-card {
-  padding: 10px;
-  margin: 1.5em 0 2em 0;
-  border-radius: 8px;
-  background-color: #efefef;
+  margin: 2em;
 }
 .content-card .title {
   margin: 0;
-  padding: 10px 10px 20px 10px;
+  padding: 10px 10px 0 10px;
+  margin-bottom: 0;
   font-size: 2em;
   line-height: 1;
   font-family: 'Open Sans', sans-serif;
   font-weight: normal;
-  border-bottom: 1px #999 solid;
 }
-.content-card .link {
-  display: block;
-  text-decoration: none;
-  color: #222;
-}
+.content-card .link { display: block; }
+.content-card .link:before { content: '» '; }
+.content-card .link:before:hover { color: #ab2013; }
 .content-card .description {
   padding-left: 10px;
-  margin: 20px 0 0 0;
-}
-.content-card .cta {
-  font-family: 'Open Sans', sans-serif;
-  margin: 10px 0 0 0;
-}
-.content-card .cta:hover {
-  text-decoration: underline;
+  margin: 0.4em 0 0 2em;
 }
 
-/* Now the main content - in a note*/
+/* Now the main content - in a note */
 .note-date {
   display: block;
   text-align: center;
